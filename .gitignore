@@ -1,0 +1,24 @@
+# --- OS Specific Files ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Editor/IDE Folders ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Node/Dependencies (if you ever use npm) ---
+node_modules/
+package-lock.json
+
+# --- Local Assets/Large Files ---
+# If you have high-res reference images you don't want to host on GitHub:
+# assets/images/raw/
+
+# --- Temp/Log Files ---
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
