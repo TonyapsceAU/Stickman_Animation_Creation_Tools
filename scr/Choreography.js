@@ -1,40 +1,62 @@
 function Choreography(myActor){
 	// 新增命令的格式 : addCommand(poseName,val=null,speed=null)
 	// e.g. myActor.addCommand("SPRINT_DYNAMIC",[i,1],myActor.lerpSpeed*5);
+
+	myActor.config.position = createVector(0, -77, 0); // test moving
+	myActor.config.rotation += radians(0); // test rotation
+	
 	// myActor.addCommand("");
 		// tests:
-		// myActor.config.position = {x:100,y:0,z:0}; // test moving
-		// myActor.config.rotation += radians(90); // test rotation
 		// myActor.addCommand("OVER_THE_SHOULDER_REST");         // 先變回站姿
 		// myActor.addCommand("EDIT_SLOT",myActor); // 讓 Actor 進入可編輯的狀態
 		// myActor.addCommand("STAND");         // 先變回站姿
 		// myActor.addCommand("HOLD_WEAPON_L"); // 再把左手舉起來
-		// myActor.addCommand("Orthodox_stand"); 
+		// myActor.addCommand("Orthodox_stand",createVector(0, 5, 0)); 
 		// combined_STEP_TURN_Orthodox_stand_HOLD_WEAPON_L(myActor);
 		// step_turn(myActor,4);
-
-	myActor.addCommand("STAND");
+	
+	// aerial cleave
+	myActor.addCommand("STAND",createVector(0, 0, 0),myActor.lerpSpeed); 
 	waiting("STAND",1,1);
-	myActor.addCommand("SPRINT_SET");
-	myActor.addCommand("jogging_POSE_1");
-	myActor.addCommand("jogging_POSE_2");
-	myActor.addCommand("jogging_POSE_3");
-
+	myActor.addCommand("SQUAT_JUMP_SQUAT",createVector(0, 12, 0));
+	myActor.addCommand("SQUAT_JUMP_JUMP",createVector(0, -200, 0));
+	myActor.addCommand("AERIAL_CLEAVE_1",createVector(-10.88,-10,0),myActor.lerpSpeed*2);
+	myActor.addCommand("AERIAL_CLEAVE_2",createVector(0, 5, 0));
+	myActor.addCommand("AERIAL_CLEAVE_3",createVector(0, 5, 0));
+	myActor.addCommand("AERIAL_CLEAVE_4",createVector(14, 238, 14));
+	myActor.addCommand("AERIAL_CLEAVE_4",createVector(0, 0, 0),myActor.lerpSpeed);
+	// jump in place
+	// myActor.addCommand("STAND",createVector(0, 0, 0)); 
+	// waiting("STAND",1,1);
+	// myActor.addCommand("SQUAT_JUMP_SQUAT",createVector(0, 12, 0));
+	// myActor.addCommand("SQUAT_JUMP_JUMP",createVector(0, -200, 0));
+	// myActor.addCommand("SQUAT_JUMP_JUMP",createVector(0, 190, 0),myActor.lerpSpeed*0.6);
+	// myActor.addCommand("SQUAT_JUMP_SQUAT",createVector(0, 20, 0),myActor.lerpSpeed);
+	// myActor.addCommand("STAND",createVector(0, -12, 0));
 	
-	// let loopcount = 0, i=0, step = 0.1;
-	// while (loopcount<5){
-	// 	myActor.addCommand("SPRINT_DYNAMIC",[i,1],myActor.lerpSpeed);
-	// 	i+=step
-	// 	if (i >= 1 || i<= -1) {
-	// 		step*=-1; 
-	// 		loopcount++;
-	// 	}
-	// 	// print(i)
-	// }
-
+	// running(myActor); 
+	// myActor.addCommand("RUNNING_SET",createVector(0, 2, 25));
+	// myActor.addCommand("RUNNING_POSE_1",createVector(0, 10.47, 70));
+	// myActor.addCommand("RUNNING_POSE_2",createVector(0, -5, 50));
+	// myActor.addCommand("RUNNING_POSE_3",createVector(0, 0, 25));
+	// myActor.addCommand("RUNNING_POSE_4",createVector(0, 0, 50));
+	// myActor.addCommand("RUNNING_POSE_5",createVector(0, 0, 50));
+	// myActor.addCommand("RUNNING_POSE_6",createVector(0, -1, 50));
+	// myActor.addCommand("RUNNING_POSE_1",createVector(0, 5, 70));
+	// myActor.addCommand("RUNNING_POSE_2",createVector(0, -5, 50));
+	// myActor.addCommand("RUNNING_SET",createVector(0, -5, 25));
 	
-	// myActor.addCommand("HOLD_WEAPON_L"); // 再把左手舉起來
-	// myActor.addCommand("STEP_TURN",90);
+	// jogging(myActor); 
+	// myActor.addCommand("jogging_POSE_1",createVector(0, 1.24, 25));
+	// myActor.addCommand("jogging_POSE_2",createVector(0, 3.14, 50));
+	// myActor.addCommand("jogging_POSE_3",createVector(0, -1, 50));
+	// myActor.addCommand("jogging_POSE_4",createVector(0, 0, 25));
+	// myActor.addCommand("jogging_POSE_5",createVector(0, 0, 50));
+	// myActor.addCommand("jogging_POSE_6",createVector(0, -3, 50));
+	
+	
+	// myActor.addCommand("SPRINT_SET",createVector(0, 77-71.1, 100));
+
 	
 }
 
@@ -64,6 +86,32 @@ function waiting(pose,intensity,duration){
 		myActor.addCommand(pose);
 	}
 	myActor.addCommand(pose,null,myActor.lerpSpeed);
+}
+
+function running(myActor){
+	myActor.addCommand("STAND");
+	let speed = 2;
+	waiting("STAND",1,1);
+	myActor.addCommand("RUNNING_SET",createVector(0, 2, 25),myActor.lerpSpeed*3);
+	myActor.addCommand("RUNNING_POSE_1",createVector(0, 10.47, 70),myActor.lerpSpeed*2);
+	myActor.addCommand("RUNNING_POSE_2",createVector(0, -5, 50));
+	myActor.addCommand("RUNNING_POSE_3",createVector(0, 0, 25));
+	myActor.addCommand("RUNNING_POSE_4",createVector(0, 0, 50));
+	myActor.addCommand("RUNNING_POSE_5",createVector(0, 0, 50));
+	myActor.addCommand("RUNNING_POSE_6",createVector(0, -1, 50));
+	myActor.addCommand("RUNNING_POSE_1",createVector(0, 5, 70));
+	myActor.addCommand("RUNNING_POSE_2",createVector(0, -5, 50),myActor.lerpSpeed*3);
+	myActor.addCommand("RUNNING_SET",createVector(0, -5, 25));
+	myActor.addCommand("STAND",createVector(0, 0, 0),myActor.lerpSpeed);
+}
+
+function jogging(myActor){
+	myActor.addCommand("jogging_POSE_1",createVector(0, 1.24, 25),myActor.lerpSpeed*1.75);
+	myActor.addCommand("jogging_POSE_2",createVector(0, 3.14, 50));
+	myActor.addCommand("jogging_POSE_3",createVector(0, -1, 50));
+	myActor.addCommand("jogging_POSE_4",createVector(0, 0, 25));
+	myActor.addCommand("jogging_POSE_5",createVector(0, 0, 50));
+	myActor.addCommand("jogging_POSE_6",createVector(0, -3, 50),myActor.lerpSpeed);
 }
 
 // Choreography sets:

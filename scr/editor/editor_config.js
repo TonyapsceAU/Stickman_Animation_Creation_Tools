@@ -12,6 +12,9 @@ let showActor = true;// Actor開關
 let editedJoints = new Set(); // 用來儲存被修改過的關節名稱
 let editModeEnable = true;
 let tweakStep = 0.02;
+let actorHeightedit = false;
+let actorPositionedit = false;
+
 
 /**
  * 根據 bones 清單自動尋找父節點

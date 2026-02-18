@@ -22,7 +22,7 @@ function drawJointAxes(actor, jointName, size = 50) {
         translate(startPos.x, startPos.y, startPos.z);
         
         // 接下來繪製輔助 UI
-        drawAxialPlanes(v, size, 25);       // 1. 半透明平面
+        // drawAxialPlanes(v, size, 25);       // 1. 半透明平面
         drawAxesLines(v, size);             // 2. 座標軸線
         drawStrengthMarkers(v, size);    // 3. 強度球體
         drawDirectionPreview(v, size);   // 4. 方向預覽線

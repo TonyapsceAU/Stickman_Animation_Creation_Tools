@@ -3,7 +3,7 @@
  * A/D: X 軸 | Q/E: Y 軸 | W/S: Z 軸
  * 同時按下 ENTER 會輸出代碼
  */
-function handleManualVectorTweak() {
+function handleManualVectorTweak(myActor) {
 	let activeJoint = jointNames[currentJointIndex];
 	let v = myActor.vPose[activeJoint]; // 直接修改 Actor 當前的向量數據
 	if (!v) return;
@@ -23,8 +23,27 @@ function handleManualVectorTweak() {
 		}
 	}
 	tweakStep = constrain(tweakStep, 0.001, 0.5);
+	if(actorPositionedit){
+		// A/D 控制 X 軸   
+		if (keyIsDown(65)) {myActor.config.position.x += tweakStep; changed = true;}
+		if (keyIsDown(68)) {myActor.config.position.x -= tweakStep; changed = true;}
+		
+		// Q/E 控制 Y 軸
+		if (keyIsDown(81)) {myActor.config.position.y -= tweakStep; changed = true;} 
+		if (keyIsDown(69)) {myActor.config.position.y += tweakStep; changed = true;}
+		
+		// W/S 控制 Z 軸
+		if (keyIsDown(87)) {myActor.config.position.z += tweakStep; changed = true;}
+		if (keyIsDown(83)) {myActor.config.position.z -= tweakStep; changed = true;}
 
-	if(referenceImageEnable){
+		// R 鍵旋轉 90 度
+		if (keyIsDown(82)) {myActor.config.rotation -= tweakStep; changed = true;}
+		
+	}else if(actorHeightedit){
+		// Q/E 控制 Y 軸
+		if (keyIsDown(81)) {myActor.config.position.y -= tweakStep; changed = true;} 
+		if (keyIsDown(69)) {myActor.config.position.y += tweakStep; changed = true;}
+	}else if(referenceImageEnable){
 		// A/D 控制 X 軸
 		if (keyIsDown(65)) {refPos.x += tweakStep; changed = true;}
 		if (keyIsDown(68)) {refPos.x -= tweakStep; changed = true;}
@@ -38,10 +57,7 @@ function handleManualVectorTweak() {
 		if (keyIsDown(83)) {refPos.z -= tweakStep; changed = true;}
 
 		// R 鍵旋轉 90 度
-		if (keyIsPressed && (key === 'r' || key === 'R')) {
-			refRotY += HALF_PI;
-			key = ''; 
-		}
+		if (keyIsDown(82)) {refRotY += tweakStep; changed = true;}
 	}else{
 		// A/D 控制 X 軸
 		if (keyIsDown(65)) {v.x += tweakStep; changed = true;}
@@ -65,10 +81,6 @@ function handleManualVectorTweak() {
 	if (keyIsPressed) {
 		if (keyCode === ENTER) exportCurrentPose();
 		if (key === 'p' || key === 'P') exportPartialPose();
-		if (key === 'l' || key === 'L') {
-			referenceImageEnable = !referenceImageEnable;
-			key = '';
-		}
 	}
 }
 
@@ -77,8 +89,10 @@ function handleManualVectorTweak() {
  */
 function exportCurrentPose() {
     let output = "\"NEW_POSE\": (val) => ({\n";
-    
-    jointNames.forEach(name => {
+	 // 匯出時加入這行
+	 output += `    Position: createVector(${myActor.config.position.x.toFixed(2)}, ${myActor.config.position.y.toFixed(2)}, ${myActor.config.position.z.toFixed(2)}),\n`;
+    output += `    movement: val,\n`
+	 jointNames.forEach(name => {
         let vec = myActor.vPose[name];
         if (vec) {
             let isEdited = editedJoints.has(name);
@@ -105,8 +119,9 @@ function exportCurrentPose() {
 function exportPartialPose() {
     let output = "\"PARTIAL_POSE\": (val) => ({\n";
     let count = 0;
-
-    editedJoints.forEach(name => {
+	 output += `    Position: createVector(${myActor.config.position.x.toFixed(2)}, ${myActor.config.position.y.toFixed(2)}, ${myActor.config.position.z.toFixed(2)}),\n`;
+    output += `    movement: val,\n`
+	 editedJoints.forEach(name => {
         let vec = myActor.vPose[name];
         output += `    ${name.padEnd(10)}: createVector(${vec.x.toFixed(2)}, ${vec.y.toFixed(2)}, ${vec.z.toFixed(2)}),\n`;
         count++;
@@ -127,14 +142,26 @@ function keyPressed() {
 	handleJointSelection();   // M 鍵
 	handleCameraAngles();    // 1-6 數字鍵
 	handleToggleDisplay();    // H, J 鍵
-	if(key === 32){
+	// print(keyCode)
+	if(keyCode == 32){
 		replay = true;
+		key = ' ';
 	}
 	if(key === 'k' || key ==='K'){
 		editModeEnable = !editModeEnable;
 	}
-	
-	
+	if (key === 'l' || key === 'L') {
+		referenceImageEnable = !referenceImageEnable;
+		key = '';
+	}
+	if(key === 'n' || key ==='N'){
+		actorHeightedit = !actorHeightedit;
+		key = '';
+	}
+	if(key === 'b' || key ==='B'){
+		actorPositionedit = !actorPositionedit;
+		key = '';
+	}
 }
 
 function handleJointSelection() {

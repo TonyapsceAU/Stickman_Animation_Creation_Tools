@@ -2,15 +2,251 @@
 //x : + is left
 //y : + is down
 //z : + is back
+
+// catalog
+// Object.keys(PoseLibrary);
+
 const PoseLibrary = {
-    // 輔助工具：複製當前關節狀態
-	"EDIT_SLOT": (actor) => {
-        let snapshot = {};
-        for (let part in actor.vPose) {
-            snapshot[part] = actor.vPose[part].copy();
-        }
-        return snapshot;
-    },
+	"AERIAL_CLEAVE_4": (val) => ({
+		movement: val,
+		pelvis : createVector(-0.14, 0.70, -0.70),
+		chest : createVector(-0.16, 0.06, -0.99),
+		neck : createVector(-0.03, -0.72, -0.70),
+		shoulderL : createVector(0.97, 0.26, 0.00),
+		elbowL : createVector(0.21, -0.44, -0.87),
+		handL : createVector(0.48, 0.88, 0.03),
+		shoulderR : createVector(-0.99, 0.13, 0.08),
+		elbowR : createVector(-0.82, -0.34, -0.46),
+		handR : createVector(-0.87, 0.02, -0.37),
+		kneeL : createVector(0.61, -0.12, 0.78),
+		footL : createVector(0.11, 0.97, 0.23),
+		toeL : createVector(-0.07, -0.01, 1.00),
+		kneeR : createVector(-0.26, 0.83, 0.49),
+		footR : createVector(-0.32, -0.10, -0.94),
+		toeR : createVector(0.09, 0.99, -0.09),
+	}),
+	"AERIAL_CLEAVE_3": (val) => ({
+		movement: val, 
+		pelvis : createVector(0.57, 0.82, -0.01), // [EDITED]
+		chest : createVector(0.72, 0.69, -0.00), // [EDITED]
+		neck : createVector(0.76, 0.62, -0.18), // [EDITED]
+		shoulderL : createVector(0.23, 0.20, -0.95), // [EDITED]
+		elbowL : createVector(0.85, 0.31, -0.43), // [EDITED]
+		handL : createVector(-0.10, -0.76, 0.64), // [EDITED]
+		shoulderR : createVector(-0.30, -0.03, 0.95), // [EDITED]
+		elbowR : createVector(0.45, -0.60, 0.66), // [EDITED]
+		handR : createVector(0.43, -0.01, -0.90), // [EDITED]
+		kneeL : createVector(0.05, 0.95, -0.30), // [EDITED]
+		footL : createVector(-0.47, 0.87, -0.13), // [EDITED]
+		toeL : createVector(0.33, 0.91, -0.24), // [EDITED]
+		kneeR : createVector(0.80, 0.33, 0.50), // [EDITED]
+		footR : createVector(-0.72, 0.62, -0.32), // [EDITED]
+		toeR : createVector(0.41, 0.80, 0.43), // [EDITED]
+	}),
+	"AERIAL_CLEAVE_2": (val) => ({
+		movement: val,
+		pelvis : createVector(0.38, 0.93, -0.04), // [EDITED]
+		chest : createVector(0.64, 0.73, 0.23), // [EDITED]
+		neck : createVector(0.71, 0.67, 0.22), // [EDITED]
+		shoulderL : createVector(-0.86, 0.22, 0.46), // [EDITED]
+		elbowL : createVector(-0.28, 0.38, -0.88), // [EDITED]
+		handL : createVector(0.72, -0.29, -0.63), // [EDITED]
+		shoulderR : createVector(0.72, -0.58, -0.39), // [EDITED]
+		elbowR : createVector(0.48, -0.40, -0.78), // [EDITED]
+		handR : createVector(-0.80, 0.55, -0.25), // [EDITED]
+		kneeL : createVector(-0.45, 0.78, -0.42), // [EDITED]
+		footL : createVector(0.76, 0.65, 0.00), // [EDITED]
+		toeL : createVector(-0.03, 0.96, -0.28), // [EDITED]
+		kneeR : createVector(-0.53, 0.32, -0.78), // [EDITED]
+		footR : createVector(0.78, 0.62, -0.00), // [EDITED]
+		toeR : createVector(-0.11, 0.95, -0.28), // [EDITED]
+	}),
+	"AERIAL_CLEAVE_1": (val) => ({
+		movement: val,
+		pelvis : createVector(0.25, 0.97, -0.01), // [EDITED]
+		chest : createVector(0.56, 0.83, -0.00), // [EDITED]
+		neck : createVector(0.75, 0.66, -0.00), // [EDITED]
+		shoulderL : createVector(0.00, 1.00, 0.01), // [EDITED]
+		elbowL : createVector(-0.27, 0.53, 0.81), // [EDITED]
+		handL : createVector(-0.71, -0.21, -0.67), // [EDITED]
+		shoulderR : createVector(-0.00, 0.00, -1.00), // [EDITED]
+		elbowR : createVector(-0.89, 0.20, -0.40), // [EDITED]
+		handR : createVector(-0.05, -0.32, 0.95), // [EDITED]
+		kneeL : createVector(-0.77, 0.51, 0.37), // [EDITED]
+		footL : createVector(0.88, 0.47, 0.01), // [EDITED]
+		toeL : createVector(-0.00, 0.99, 0.15), // [EDITED]
+		kneeR : createVector(-0.92, 0.34, -0.20), // [EDITED]
+		footR : createVector(0.61, 0.79, -0.02), // [EDITED]
+		toeR : createVector(-0.12, 0.96, -0.25), // [EDITED]
+	}),
+	
+	"SQUAT_JUMP_JUMP": (val) => ({
+		movement: val,
+		pelvis : createVector(0.00, 1.00, 0.00), // [EDITED]
+		chest : createVector(0.00, 1.00, 0.00),
+		neck : createVector(0.00, 1.00, -0.10),
+		shoulderL : createVector(0.99, 0.01, 0.00),
+		elbowL : createVector(0.43, -0.33, 0.84), // [EDITED]
+		handL : createVector(-0.33, -0.92, -0.19), // [EDITED]
+		shoulderR : createVector(-0.99, 0.01, 0.00),
+		elbowR : createVector(-0.44, -0.26, 0.86), // [EDITED]
+		handR : createVector(0.41, -0.89, 0.18), // [EDITED]
+		kneeL : createVector(0.10, 1.00, 0.10),
+		footL : createVector(0.05, 1.00, -0.10),
+		toeL : createVector(0.00, 0.90, 0.43), // [EDITED]
+		kneeR : createVector(-0.10, 1.00, 0.10),
+		footR : createVector(-0.05, 1.00, -0.10),
+		toeR : createVector(0.00, 0.90, 0.44), // [EDITED]
+	}),
+	"SQUAT_JUMP_SQUAT": (val) => ({
+		movement:val,
+		pelvis : createVector(0.00, 0.96, -0.27), // [EDITED]
+		chest : createVector(0.00, 0.89, -0.46), // [EDITED]
+		neck : createVector(0.00, 0.84, -0.55), // [EDITED]
+		shoulderL : createVector(0.99, 0.01, 0.00),
+		elbowL : createVector(0.51, 0.78, -0.36), // [EDITED]
+		handL : createVector(-0.27, 0.63, 0.72), // [EDITED]
+		shoulderR : createVector(-0.99, 0.01, 0.00),
+		elbowR : createVector(-0.51, 0.81, -0.28), // [EDITED]
+		handR : createVector(0.26, 0.51, 0.82), // [EDITED]
+		kneeL : createVector(0.55, 0.68, 0.49), // [EDITED]
+		footL : createVector(-0.08, 0.88, -0.47), // [EDITED]
+		toeL : createVector(0.51, 0.01, 0.86), // [EDITED]
+		kneeR : createVector(-0.46, 0.66, 0.60), // [EDITED]
+		footR : createVector(-0.04, 0.90, -0.43), // [EDITED]
+		toeR : createVector(0.00, 0.01, 0.99),
+	}),
+	
+	"RUNNING_SET": (val) => ({
+		movement: val,
+		pelvis : createVector(0.00, 0.98, -0.20), // [EDITED]
+		chest : createVector(0.00, 0.95, -0.33), // [EDITED]
+		neck : createVector(0.00, 0.98, -0.21), // [EDITED]
+		shoulderR : createVector(-0.94, 0.06, 0.00),
+		elbowR : createVector(-0.18, 0.98, 0.01), // [EDITED]
+		handR : createVector(0.11, 0.79, 0.61), // [EDITED]
+		shoulderL : createVector(0.94, 0.06, 0.00),
+		elbowL : createVector(0.17, 0.90, -0.41), // [EDITED]
+		handL : createVector(-0.12, 0.82, 0.57), // [EDITED]
+		kneeR : createVector(-0.09, 0.97, -0.21),
+		footR : createVector(-0.05, 0.93, -0.35),
+		toeR : createVector(0.00, 0.06, 0.94),
+		kneeL : createVector(0.09, 0.96, 0.27), // [EDITED]
+		footL : createVector(0.04, 0.95, -0.32), // [EDITED]
+		toeL : createVector(0.00, 0.06, 0.94),
+	}),
+	"RUNNING_POSE_1": (val) => ({
+		movement: val,
+		pelvis : createVector(0.00, 0.85, -0.52), // [EDITED]
+		chest : createVector(0.00, 0.93, -0.36), // [EDITED]
+		neck : createVector(0.00, 0.89, -0.45), // [EDITED]
+		shoulderL : createVector(1.00, 0.00, -0.00), // [EDITED]
+		elbowL : createVector(0.09, 0.33, -0.94), // [EDITED]
+		handL : createVector(-0.01, 0.85, 0.53), // [EDITED]
+		shoulderR : createVector(-0.99, 0.02, 0.00),
+		elbowR : createVector(-0.18, 0.90, -0.39),
+		handR : createVector(0.03, 0.67, 0.72),
+		kneeR : createVector(-0.20, 0.89, -0.40), // [EDITED]
+		footR : createVector(-0.07, 0.58, -0.81), // [EDITED]
+		toeR : createVector(0.00, 0.94, 0.35), // [EDITED]
+		kneeL : createVector(0.19, 0.97, 0.15),
+		footL : createVector(0.02, 0.23, -0.97), // [EDITED]
+		toeL : createVector(0.00, 0.98, 0.22), // [EDITED]
+	}),
+	"RUNNING_POSE_2": (val) => ({
+		movement: val,
+		pelvis : createVector(0.00, 0.87, -0.49), // [EDITED]
+		chest : createVector(0.00, 0.94, -0.33),
+		neck : createVector(0.00, 0.90, -0.42),
+		shoulderL : createVector(0.99, 0.01, 0.00),
+		elbowL : createVector(0.09, -0.18, -0.98), // [EDITED]
+		handL : createVector(0.04, 0.71, -0.70), // [EDITED]
+		shoulderR : createVector(-0.99, 0.02, 0.00),
+		elbowR : createVector(-0.19, 0.93, 0.31), // [EDITED]
+		handR : createVector(-0.02, 0.28, 0.96), // [EDITED]
+		
+		kneeR : createVector(-0.14, 0.66, -0.74), // [EDITED]
+		footR : createVector(-0.07, -0.75, -0.66), // [EDITED]
+		toeR : createVector(0.00, 0.59, -0.81), // [EDITED]
+		
+		kneeL : createVector(0.17, 0.83, 0.52), // [EDITED]
+		footL : createVector(0.10, 0.98, -0.19), // [EDITED]
+		toeL : createVector(0.00, -0.01, 1.00), // [EDITED]
+	}),
+	"RUNNING_POSE_3": (val) => ({
+		movement: val,
+		pelvis : createVector(0.00, 0.87, -0.49), // [EDITED]
+		chest : createVector(0.00, 0.94, -0.33),
+		neck : createVector(0.00, 0.90, -0.42),
+		shoulderL : createVector(0.99, 0.01, 0.00),
+		elbowL : createVector(0.09, 0.02, -1.00), // [EDITED]
+		handL : createVector(0.11, 0.90, -0.42), // [EDITED]
+		shoulderR : createVector(-0.99, 0.02, 0.00),
+		elbowR : createVector(-0.20, 0.97, 0.13), // [EDITED]
+		handR : createVector(-0.02, 0.41, 0.91), // [EDITED]
+		
+		kneeR : createVector(-0.14, 0.68, -0.71),
+		footR : createVector(-0.10, 0.11, -0.99), // [EDITED]
+		toeR : createVector(0.00, 0.61, -0.73),
+		
+		kneeL : createVector(0.17, 0.83, 0.51),
+		footL : createVector(0.10, 0.98, 0.14), // [EDITED]
+		toeL : createVector(0.00, 0.05, 0.95),
+	}),
+	"RUNNING_POSE_4": (val) => ({
+		movement: val,
+		pelvis : createVector(0.00, 0.87, -0.49), // [EDITED]
+		chest : createVector(0.00, 0.94, -0.33),
+		neck : createVector(0.00, 0.90, -0.42),
+		shoulderL : createVector(0.99, 0.01, 0.00),
+		elbowL : createVector(0.23, 0.91, -0.35), // [EDITED]
+		handL : createVector(-0.05, 0.81, 0.58), // [EDITED]
+		shoulderR : createVector(-0.99, 0.02, 0.00),
+		elbowR : createVector(-0.13, 0.61, -0.78), // [EDITED]
+		handR : createVector(-0.04, 0.84, 0.53), // [EDITED]
+		kneeL : createVector(0.10, 0.86, -0.51), // [EDITED]
+		footL : createVector(0.09, 0.48, -0.87), // [EDITED]
+		toeL : createVector(0.00, 0.86, 0.51), // [EDITED]
+		kneeR : createVector(-0.18, 0.90, 0.39), // [EDITED]
+		footR : createVector(-0.02, 0.17, -0.98), // [EDITED]
+		toeR : createVector(0.00, 0.96, 0.27), // [EDITED]
+	}),
+	"RUNNING_POSE_5": (val) => ({
+		movement: val,
+		pelvis : createVector(0.00, 0.87, -0.49), // [EDITED]
+		chest : createVector(0.00, 0.94, -0.33),
+		neck : createVector(0.00, 0.90, -0.42),
+		shoulderL : createVector(0.99, 0.01, 0.00),
+		elbowL : createVector(0.20, 0.76, 0.62), // [EDITED]
+		handL : createVector(-0.01, -0.48, 0.88), // [EDITED]
+		shoulderR : createVector(-0.99, 0.02, 0.00),
+		elbowR : createVector(-0.13, 0.07, -0.99), // [EDITED]
+		handR : createVector(-0.09, 0.65, -0.75), // [EDITED]
+		kneeL : createVector(0.08, 0.56, -0.82), // [EDITED]
+		footL : createVector(0.09, 0.11, -0.99), // [EDITED]
+		toeL : createVector(0.00, 0.84, -0.55), // [EDITED]
+		kneeR : createVector(-0.15, 0.72, 0.68), // [EDITED]
+		footR : createVector(-0.07, 0.99, 0.12), // [EDITED]
+		toeR : createVector(0.00, 0.05, 1.00), // [EDITED]
+	}),
+	"RUNNING_POSE_6": (val) => ({
+		movement: val,
+		pelvis : createVector(0.00, 0.87, -0.49), // [EDITED]
+		chest : createVector(0.00, 0.94, -0.33),
+		neck : createVector(0.00, 0.90, -0.42),
+		shoulderL : createVector(0.99, 0.01, 0.00),
+		elbowL : createVector(0.23, 0.88, 0.42), // [EDITED]
+		handL : createVector(-0.01, 0.28, 0.96), // [EDITED]
+		shoulderR : createVector(-0.99, 0.02, 0.00),
+		elbowR : createVector(-0.13, -0.13, -0.98), // [EDITED]
+		handR : createVector(-0.12, 0.84, -0.53), // [EDITED]
+		kneeL : createVector(0.14, 0.91, -0.40),
+		footL : createVector(0.08, -0.45, -0.89),
+		toeL : createVector(0.00, 0.37, -0.93), // [EDITED]
+		kneeR : createVector(-0.17, 0.95, 0.25), // [EDITED]
+		footR : createVector(-0.07, 0.97, -0.24), // [EDITED]
+		toeR : createVector(0.00, 0.01, 1.00), // [EDITED]
+	}),
 	
 	"Combine_Poses": (pose)=>{
 		return pose;
@@ -48,7 +284,7 @@ const PoseLibrary = {
 		// 2. 只有當 val 有被明確賦值時 (包含 0)，才加入 rotation 屬性
 		// 這樣在 update() 遍歷時，若無此屬性就不會更動 Actor 的 config.rotation
 		if (val !== null && typeof val !== 'undefined') {
-			pose.rotation = radians(val);
+			pose.movement = val;
 		}
 		
 		return pose;
@@ -98,31 +334,33 @@ const PoseLibrary = {
 		};
 	},
 
-    "OVER_THE_SHOULDER_REST": (val) => ({
-        neck:      createVector(0, 1, -0.1),
-        chest:     createVector(0, 1, 0),
-        pelvis:     createVector(0, 1, 0.1),
-        
-        shoulderL: createVector(1, 0, 0),
-        shoulderR: createVector(-1, 0, 0),
-        
-        // 左手扛肩動作：大臂向上後方 (-Y, +Z)，小臂折回
-        elbowL:    createVector(0.5, 0.75, 0.25), 
-        handL:     createVector(0.5, -0.75, 0.5), 
-        
-        elbowR:    createVector(-0.3, 1, -0.1),
-        handR:     createVector(0.25, 1, 0.3),
-        
-        kneeL:     createVector(0.2, 1, 0.1),
-        footL:     createVector(0.2, 1, -0.1),
-        toeL:      createVector(0, 0, 1),
-        
-        kneeR:     createVector(-0.15, 1, 0.2),
-        footR:     createVector(-0.1, 1, -0.2),
-        toeR:      createVector(0, 0, 1)
-    }),
+	"OVER_THE_SHOULDER_REST": (val) => ({
+		movement: val,
+		neck:      createVector(0, 1, -0.1),
+		chest:     createVector(0, 1, 0),
+		pelvis:     createVector(0, 1, 0.1),
+		
+		shoulderL: createVector(1, 0, 0),
+		shoulderR: createVector(-1, 0, 0),
+		
+		// 左手扛肩動作：大臂向上後方 (-Y, +Z)，小臂折回
+		elbowL:    createVector(0.5, 0.75, 0.25), 
+		handL:     createVector(0.5, -0.75, 0.5), 
+		
+		elbowR:    createVector(-0.3, 1, -0.1),
+		handR:     createVector(0.25, 1, 0.3),
+		
+		kneeL:     createVector(0.2, 1, 0.1),
+		footL:     createVector(0.2, 1, -0.1),
+		toeL:      createVector(0, 0, 1),
+		
+		kneeR:     createVector(-0.15, 1, 0.2),
+		footR:     createVector(-0.1, 1, -0.2),
+		toeR:      createVector(0, 0, 1)
+	}),
 
     "Orthodox_stand": (val) => ({
+		movement:val,
 		pelvis : createVector(0.01, 1.00, -0.08), // [EDITED]
 		chest : createVector(0.00, 0.98, -0.18), // [EDITED]
 		neck : createVector(0.00, 0.96, -0.28),
@@ -139,24 +377,6 @@ const PoseLibrary = {
 		footR : createVector(-0.04, 0.94, -0.35), // [EDITED]
 		toeR : createVector(-0.68, 0.00, 0.70),
     }),
-	
-	"LEFT_HADSHAKE": (val) => ({
-		pelvis : createVector(0.00, 1.00, 0.00),
-		chest : createVector(0.00, 1.00, 0.00),
-		neck : createVector(0.00, 1.00, -0.10),
-		shoulderL : createVector(0.94, 0.00, 0.33),
-		elbowL : createVector(0.23, 0.89, 0.39),
-		handL : createVector(0.06, 0.37, 0.93),
-		shoulderR : createVector(-1.00, 0.00, 0.00),
-		elbowR : createVector(-0.20, 0.98, -0.10),
-		handR : createVector(-0.14, 0.97, 0.19),
-		kneeL : createVector(0.10, 0.99, 0.10),
-		footL : createVector(0.05, 0.99, -0.10),
-		toeL : createVector(0.00, 0.00, 1.00),
-		kneeR : createVector(-0.10, 0.99, 0.10),
-		footR : createVector(-0.05, 0.99, -0.10),
-		toeR : createVector(0.00, 0.00, 1.00),
-	}),
 
 	// 局部姿勢：左手持物 (只定義左臂)
 	"HOLD_WEAPON_L": (val) => ({
@@ -167,6 +387,7 @@ const PoseLibrary = {
 	
 
 	"SPRINT_SET": (val) => ({
+		movement: val,
 		pelvis : createVector(0.00, 0.99, -0.16), // [EDITED]
 		chest : createVector(0.00, 0.91, -0.41), // [EDITED]
 		neck : createVector(0.00, 0.80, -0.59), // [EDITED]
@@ -185,17 +406,18 @@ const PoseLibrary = {
 	}),
 	
 	"jogging_POSE_1": (val) => ({
+		movement: val,
 		pelvis : createVector(0.00, 0.95, -0.30), // [EDITED]
 		chest : createVector(0.00, 1.00, -0.09), // [EDITED]
 		neck : createVector(0.00, 0.98, -0.20), // [EDITED]
 		
 		shoulderR : createVector(-0.99, 0.02, 0.00),
-		elbowR : createVector(-0.27, 0.89, -0.38), // [EDITED]
-		handR : createVector(0.13, 0.12, 0.98), 
+		elbowL : createVector(0.28, 0.96, 0.11),
+		handL : createVector(-0.02, -0.20, 0.98),
 		
 		shoulderL : createVector(0.99, 0.01, 0.00),
-		elbowL : createVector(0.18, 0.89, -0.41), // [EDITED]
-		handL : createVector(0.04, 0.65, 0.76),
+		elbowR : createVector(-0.18, 0.89, -0.41), // [EDITED]
+		handR : createVector(0.04, 0.65, 0.76),
 		
 		kneeR : createVector(-0.16, 0.72, 0.67), // [EDITED]
 		footR : createVector(-0.06, 0.78, -0.62), // [EDITED]
@@ -207,6 +429,7 @@ const PoseLibrary = {
 	}),
 
 	"jogging_POSE_2": (val) => ({
+		movement: val,
 		pelvis : createVector(0.00, 0.96, -0.28), // [EDITED]
 		chest : createVector(0.00, 0.99, -0.13),
 		neck : createVector(0.00, 0.96, -0.24),
@@ -229,15 +452,16 @@ const PoseLibrary = {
 	}),
 
 	"jogging_POSE_3": (val) => ({
+		movement:  val,
 		pelvis : createVector(0.00, 0.96, -0.28), // [EDITED]
 		chest : createVector(0.00, 0.99, -0.13),
 		neck : createVector(0.00, 0.96, -0.24),
 		shoulderL : createVector(0.99, 0.01, 0.00),
-		elbowL : createVector(0.20, 0.96, 0.11),
-		handL : createVector(-0.04, -0.39, 0.88),
+		elbowL : createVector(0.20, 0.96, -0.21), // [EDITED]
+		handL : createVector(-0.01, 0.22, 0.98), // [EDITED]
 		shoulderR : createVector(-1.00, 0.02, 0.00),
-		elbowR : createVector(-0.20, 0.78, -0.59),
-		handR : createVector(0.09, 0.61, 0.77),
+		elbowR : createVector(-0.24, 0.95, -0.21), // [EDITED]
+		handR : createVector(0.10, 0.49, 0.86), // [EDITED]
 		kneeL : createVector(0.21, 0.89, 0.41), // [EDITED]
 		footL : createVector(0.07, -0.13, -0.99), // [EDITED]
 		toeL : createVector(0.08, 0.86, -0.32),
@@ -246,120 +470,61 @@ const PoseLibrary = {
 		toeR : createVector(0.00, 0.03, 0.99),
 	}),
 
+	"jogging_POSE_4": (val) => ({
+		movement: val,
+		pelvis : createVector(0.00, 0.96, -0.28), // [EDITED]
+		chest : createVector(0.00, 0.99, -0.13),
+		neck : createVector(0.00, 0.96, -0.24),
+		shoulderL : createVector(0.99, 0.01, 0.00),
+		elbowL : createVector(0.19, 0.92, -0.35),
+		handL : createVector(-0.04, 0.39, 0.92),
+		shoulderR : createVector(-1.00, 0.02, 0.00),
+		elbowR : createVector(-0.25, 0.96, 0.10),
+		handR : createVector(0.13, 0.05, 0.99),
+		kneeL : createVector(0.18, 0.75, 0.64), // [EDITED]
+		footL : createVector(0.02, 0.79, -0.61), // [EDITED]
+		toeL : createVector(0.02, 0.84, 0.55), // [EDITED]
+		kneeR : createVector(-0.19, 0.95, -0.25), // [EDITED]
+		footR : createVector(-0.11, 0.95, -0.29), // [EDITED]
+		toeR : createVector(0.00, 0.27, 0.96), // [EDITED]
+	}),
+
+	"jogging_POSE_5": (val) => ({
+		movement: val,
+		pelvis : createVector(0.00, 0.96, -0.28), // [EDITED]
+		chest : createVector(0.00, 0.99, -0.13),
+		neck : createVector(0.00, 0.96, -0.24),
+		shoulderL : createVector(0.99, 0.01, 0.00),
+		elbowL : createVector(0.17, 0.85, -0.50), // [EDITED]
+		handL : createVector(-0.07, 0.63, 0.77), // [EDITED]
+		shoulderR : createVector(-1.00, 0.02, 0.00),
+		elbowR : createVector(-0.25, 0.96, 0.12), // [EDITED]
+		handR : createVector(0.11, -0.49, 0.87), // [EDITED]
+		kneeL : createVector(0.16, 0.85, 0.50), // [EDITED]
+		footL : createVector(0.05, 0.98, 0.19), // [EDITED]
+		toeL : createVector(0.01, -0.01, 1.00), // [EDITED]
+		kneeR : createVector(-0.19, 0.94, -0.28), // [EDITED]
+		footR : createVector(-0.12, -0.34, -0.93), // [EDITED]
+		toeR : createVector(-0.02, 0.97, -0.23), // [EDITED]
+	}),
+
+	"jogging_POSE_6": (val) => ({
+		movement: val,
+		pelvis : createVector(0.00, 0.96, -0.28), // [EDITED]
+		chest : createVector(0.00, 0.99, -0.13),
+		neck : createVector(0.00, 0.96, -0.24),
+		shoulderL : createVector(0.99, 0.01, 0.00),
+		elbowL : createVector(0.20, 0.98, -0.04),
+		handL : createVector(-0.09, -0.21, 0.97), // [EDITED]
+		shoulderR : createVector(-1.00, 0.02, 0.00),
+		elbowR : createVector(-0.25, 0.96, -0.08), // [EDITED]
+		handR : createVector(0.11, 0.55, 0.83), // [EDITED]
+		kneeL : createVector(0.17, 0.98, -0.08), // [EDITED]
+		footL : createVector(0.07, 0.96, -0.27), // [EDITED]
+		toeL : createVector(0.01, 0.05, 0.96),
+		kneeR : createVector(-0.18, 0.91, 0.38), // [EDITED]
+		footR : createVector(-0.12, -0.25, -0.89),
+		toeR : createVector(-0.02, 0.92, -0.15),
+	}),
 	
-	"SPRINT_DYNAMIC": (val) => {
-		let [state, intensity] = val; // state: -1~1, intensity: 0~1
-		
-		// 1.1 計算傾斜角度 (5 到 25 度)
-		let leanDegree = 5 + (45 * intensity); 
-		let leanRad = radians(leanDegree); // 轉為弧度供 sin/cos 使用
-		// 1.2 計算向量
-		// y 控制高度 (垂直分量)，z 控制前傾 (水平分量)
-		let trunkY = cos(leanRad);
-		let trunkZ = sin(leanRad);
-		
-		// --- 2 肩膀扭轉 (Shoulder Twist) ---
-		// 強度越高，扭轉角度越大 (0~15度)
-		let twistDegree = (15 * intensity) * state; 
-		let tRad = radians(twistDegree);
-		// 計算肩膀向量 (在水平面 X-Z 平面上旋轉)
-		let tCos = cos(tRad), tSin = sin(tRad);
-
-		// 3 手臂擺幅計算 (上臂 Elbow)
-		// 衝刺時前擺角度可達 70 度，後擺約 40 度
-		let armSwingDeg = (70 * intensity) * state; 
-		let armRad = radians(armSwingDeg);
-		let sY = cos(armRad); // 手肘的垂直分量
-		let sZ = sin(armRad); // 手肘的前後分量
-		// 當上臂向前(sZ+)下擺(sY+)時，下臂應該向上(y-)折回
-		// 我們讓下臂的方向與上臂成直角
-		// 3.2.1 左側擺幅計算 (sZ 為負代表向前)
-		let armRadL = radians(70 * intensity * state);
-		let sYL = cos(armRadL), sZL = -sin(armRadL);
-		let hYL = -sZL, hZL = sYL;
-		
-		// 3.2.2 右側擺幅計算 (相位與左側相反)
-		let armRadR = radians(70 * intensity * -state);
-		let sYR = cos(armRadR), sZR = -sin(armRadR);
-		let hYR = -sZR, hZR = sYR;
-
-		// --- 4. 腿部擺幅計算 (大腿 Knee) ---
-		// 大腿擺動與同側手臂相反。我們用 state 控制左大腿 (KneeL)
-		// 衝刺時抬膝角度很大 (約 80 度)，後蹬角度較小 (約 30 度)
-		
-		// 左大腿 (與 state 相反，因為 state 跟隨左手)
-		// 當 state 為負 (-1)，左手向後，此時左大腿向前抬起
-		let legRadL = radians(80 * intensity * -state); 
-		let kYL = cos(legRadL);
-		let kZL = sin(legRadL); // 正值代表向後，負值代表向前
-
-		// 右大腿 (與 state 同步)
-		let legRadR = radians(80 * intensity * state);
-		let kYR = cos(legRadR);
-		let kZR = sin(legRadR);
-
-		// --- 5. 小腿擺幅計算 (Foot) ---
-		// 小腿相對於大腿的角度。
-		// 當大腿向前抬 (legRad 為負) 時，小腿要向後折 (角度變正)
-		// 衝刺時後折可達 100 度 (radians(100))
-		
-		let foldPower = 100 * intensity; // 衝刺時最大摺疊角度
-		
-		// 左小腿：當 -state 為正(抬起)時摺疊
-		let fRadL = radians(foldPower * (state > 0 ? -state : 0.2)); 
-		let fYL = cos(fRadL);
-		let fZL = sin(fRadL); // 正值代表向後折，踢向屁股
-
-		// 右小腿：當 state 為正(抬起)時摺疊
-		let fRadR = radians(foldPower * (state < 0 ? state : 0.2));
-		let fYR = cos(fRadR);
-		let fZR = sin(fRadR);
-		
-		return {
-			pelvis :	createVector(0, 0.9+trunkY, -0.4-trunkZ),
-			chest :	createVector(0, 0.9+trunkY, -0.4-trunkZ),
-			neck :	createVector(0, 0.8+trunkY, -0.6-trunkZ),
-
-			shoulderL: createVector(tCos,  0, tSin),
-			shoulderR: createVector(-tCos, 0, -tSin),
-			
-			// 4. 左手臂
-			elbowL: createVector(0.3*(tCos * 0.2 - tSin * sZL),  0.7*sYL,         0.5*(tSin * 0.2 + tCos * sZL) ),
-			handL:  createVector(0.1*(tCos * -0.1 - tSin * hZL), 0.7*(hYL * 0.8), 0.6*(tSin * -0.1 + tCos * hZL)),
-			
-			// 5. 右手臂 (修正重點：X 軸基礎偏移為 -0.2，且使用右側專屬的 sZR/hZR)
-			elbowR: createVector(0.3*(-tCos * 0.2 - tSin * sZR),  0.7*sYR,         0.5*(-tSin * 0.2 + tCos * sZR)),
-			handR:  createVector(0.1*(-tCos * -0.1 - tSin * hZR), 0.7*(hYR * 0.8), 0.6*(tSin * -0.1 + tCos * hZR)),
-
-			// 7. 左大腿 (KneeL)
-			// x: 0.15 保持雙腳間距，不隨肩膀旋轉，但受骨盆位置連動
-			kneeL: createVector(0.15, kYL, kZL),
-			
-			// 8. 右大腿 (KneeR)
-			kneeR: createVector(-0.15, kYR, kZR),
-
-			// 9. 左小腿 (FootL)
-			// 注意：小腿是從膝蓋往回長的，fY 往下，fZ 往後
-			footL: createVector(0, fYL, fZL),
-			
-			// 10. 右小腿 (FootR)
-			footR: createVector(0, fYR, fZR),
-
-			// 11. 腳掌 (Toe) - 衝刺時腳尖向下
-			//toeL: createVector(0, 0.2 * intensity, 0.8),
-			//toeR: createVector(0, 0.2 * intensity, 0.8)
-
-			
-			//kneeL : createVector(0.30, 0.77, 0.56), // [EDITED]
-			//footL : createVector(0.05, 1.00, -0.09),
-			//toeL :  createVector(0.00, 0.07, 0.93),
-			
-			//kneeR : createVector(-0.23, 0.92, 0.30), // [EDITED]
-			//footR : createVector(-0.10, 1.28, -0.94),
-			//toeR : createVector(0.00, 0.07, 0.93),
-
-			
-				
-		};
-}
 };
