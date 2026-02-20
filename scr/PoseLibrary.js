@@ -3,18 +3,20 @@
 //y : + is down
 //z : + is back
 
-// catalog
-// Object.keys(PoseLibrary);
-
+// catalog : Object.keys(PoseLibrary);
 const PoseLibrary = {
+	"PROP_CMD" : (prop_config) => ({
+		PROP_CMD:prop_config
+	}),
+	
 	"AERIAL_CLEAVE_4": (val) => ({
 		movement: val,
 		pelvis : createVector(-0.14, 0.70, -0.70),
 		chest : createVector(-0.16, 0.06, -0.99),
 		neck : createVector(-0.03, -0.72, -0.70),
 		shoulderL : createVector(0.97, 0.26, 0.00),
-		elbowL : createVector(0.21, -0.44, -0.87),
-		handL : createVector(0.48, 0.88, 0.03),
+		elbowL : createVector(0.06, -0.43, -0.90),
+		handL : createVector(-0.06, 0.91, -0.41),
 		shoulderR : createVector(-0.99, 0.13, 0.08),
 		elbowR : createVector(-0.82, -0.34, -0.46),
 		handR : createVector(-0.87, 0.02, -0.37),
@@ -377,14 +379,12 @@ const PoseLibrary = {
 		footR : createVector(-0.04, 0.94, -0.35), // [EDITED]
 		toeR : createVector(-0.68, 0.00, 0.70),
     }),
-
 	// 局部姿勢：左手持物 (只定義左臂)
 	"HOLD_WEAPON_L": (val) => ({
 		shoulderL: createVector(0.8, -0.2, 0.4),
 		elbowL : createVector(0.35, 0.91, -0.23),
 		handL : createVector(0.00, 0.89, 0.45)
 	}),
-	
 
 	"SPRINT_SET": (val) => ({
 		movement: val,
@@ -427,7 +427,6 @@ const PoseLibrary = {
 		footL : createVector(0.11, 0.94, -0.33), // [EDITED]
 		toeL : createVector(0.00, 0.07, 0.93),
 	}),
-
 	"jogging_POSE_2": (val) => ({
 		movement: val,
 		pelvis : createVector(0.00, 0.96, -0.28), // [EDITED]
@@ -450,7 +449,6 @@ const PoseLibrary = {
 		footL : createVector(0.06, -0.30, -0.95), // [EDITED]
 		toeL : createVector(0.09, 0.91, -0.40), // [EDITED]
 	}),
-
 	"jogging_POSE_3": (val) => ({
 		movement:  val,
 		pelvis : createVector(0.00, 0.96, -0.28), // [EDITED]
@@ -469,7 +467,6 @@ const PoseLibrary = {
 		footR : createVector(-0.11, 0.95, -0.31), // [EDITED]
 		toeR : createVector(0.00, 0.03, 0.99),
 	}),
-
 	"jogging_POSE_4": (val) => ({
 		movement: val,
 		pelvis : createVector(0.00, 0.96, -0.28), // [EDITED]
@@ -488,7 +485,6 @@ const PoseLibrary = {
 		footR : createVector(-0.11, 0.95, -0.29), // [EDITED]
 		toeR : createVector(0.00, 0.27, 0.96), // [EDITED]
 	}),
-
 	"jogging_POSE_5": (val) => ({
 		movement: val,
 		pelvis : createVector(0.00, 0.96, -0.28), // [EDITED]
@@ -507,7 +503,6 @@ const PoseLibrary = {
 		footR : createVector(-0.12, -0.34, -0.93), // [EDITED]
 		toeR : createVector(-0.02, 0.97, -0.23), // [EDITED]
 	}),
-
 	"jogging_POSE_6": (val) => ({
 		movement: val,
 		pelvis : createVector(0.00, 0.96, -0.28), // [EDITED]
