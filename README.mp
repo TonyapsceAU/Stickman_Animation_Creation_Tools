@@ -2,8 +2,8 @@
 
 ## Vector Aim 3D: 高動態向量驅動動畫引擎
 
-> **「當火柴人的流暢動感遇上 3D 空間的精確控制。」**
-> *(建議在此放置 AERIAL_CLEAVE 或 HOP_BACKWARD 實際運行 GIF)*
+> **「當火柴人的流暢動感遇上 3D 空間的精確控制。」**  
+> *(Place your AERIAL_CLEAVE or HOP_BACKWARD demo GIF here)*
 
 ---
 
@@ -11,10 +11,10 @@
 
 ### 開發初衷與目標
 
-本專案深受 **Hyun's Dojo** 的火柴人戰鬥動畫啟發。
+本專案深受 Hyun's Dojo 的火柴人戰鬥動畫啟發。  
 我們旨在開發一個輕量級、基於程式碼驅動的 3D 動畫環境，在跳脫傳統 3D 軟體沉重負擔的同時，獲得對骨骼向量與道具物理極致的控制權。
 
-**核心目標：**
+**核心目標：**  
 讓動畫師能以最直觀的「向量指向」邏輯，快速編排具備衝擊力與流暢度的 3D 動作。
 
 ---
@@ -23,145 +23,135 @@
 
 ### 系統架構
 
-本引擎基於自定義的 **向量驅動骨架系統 (Vector-Driven Skeleton)**。
+本引擎基於自定義的 **向量驅動骨架系統 (Vector-Driven Skeleton)**。  
 不同於傳統的歐拉角旋轉（容易產生萬向鎖問題），本系統直接操作標準化向量來定義關節朝向，確保動畫插值過程平滑無死角。
 
-* **核心庫：** [p5.js](https://p5js.org/)
-* **渲染器：** WebGL (3D Mode)
+- **Core Library:** https://p5js.org/  
+- **Renderer:** WebGL (3D Mode)
 
 #### 技術特點
 
-* **空間坐標系：**
+- **空間坐標系**
+  - X → 左  
+  - Y → 下（重力方向）  
+  - Z → 後  
 
-  * X → 左
-  * Y → 下（重力方向）
-  * Z → 後
-
-* **插值邏輯：**
-  採用基於向量的線性插值（Lerp），支援動態調整插值速度（Lerp Speed）。
+- **Interpolation Logic**
+  - Vector-based Linear Interpolation (Lerp)
+  - Dynamic Lerp Speed Supported
 
 ---
 
 ### 檔案結構 (Project Structure)
 
 ```text
-├── assets/                  # 靜態資源
-│   ├── SourceCodePro-Bold.otf # UI 字體
-│   └── image/               # 動作參考圖 (例如 jogging 序列)
-├── index.html               # 專案入口
-├── mySketch.js              # 主程式邏輯 (Setup/Draw)
-└── scr/                     # 核心原始碼
-    ├── Actor.js             # 角色類別：處理向量插值與骨架求解
-    ├── Choreography.js      # 劇本管理：定義動作指令序列
-    ├── HUD.js               # 界面渲染：即時資訊與數值顯示
-    ├── PoseLibrary.js       # 姿勢庫：儲存所有 V-Pose 數據
-    ├── Prop_ATTACHED.js     # 道具系統：處理掛載與插值
-    ├── Reference_Image.js   # 參考圖類別：WebGL 空間內的圖層管理
-    └── editor/              # 編輯器套件
-        ├── editor_camera.js  # 視角控制：多象限與正交視角切換
-        ├── editor_config.js  # 編輯器設定：模式與狀態定義
-        ├── editor_control.js # 控制輸入：處理鍵盤與數值微調
-        └── editor_display.js # 編輯器輔助視覺化 (如關節軸向)
+├── assets/
+│   ├── SourceCodePro-Bold.otf
+│   └── image/
+├── index.html
+├── mySketch.js
+└── scr/
+    ├── Actor.js
+    ├── Choreography.js
+    ├── HUD.js
+    ├── PoseLibrary.js
+    ├── Prop_ATTACHED.js
+    ├── Reference_Image.js
+    └── editor/
+        ├── editor_camera.js
+        ├── editor_config.js
+        ├── editor_control.js
+        └── editor_display.js
 ```
 
 ---
 
 ## 3. 動畫製作流程 (Workflow)
 
-建立一段電影級動作序列的標準步驟：
+1. **Stage Setup**
+   - Define 3D scene via code
 
-1. **舞台建立 (Stage)**
-   透過程式碼定義 3D 場景空間。
+2. **Prop Configuration**
+   - Use `Prop_ATTACHED` to create weapons or tools
 
-2. **道具配置 (Prop)**
-   使用 `Prop_ATTACHED` 類別建立如刀劍、刀鞘等動態道具。
+3. **Actor Initialization**
+   - Setup Actor instance and initial vPose
 
-3. **角色設定 (Actor)**
-   初始化 Actor 實例並設定初始向量姿勢（vPose）。
+4. **Reference Import**
+   - Load motion reference images into WebGL space
 
-4. **導入參考圖 (Reference)**
-   將動作參考圖導入 WebGL 空間，作為「透視描圖」基底。
+5. **Choreography**
 
-5. **劇本編排 (Choreography)**
-
-   * 5.1 參考圖定位：調整參考圖位置與透明度
-   * 5.2 編輯關節：微調骨骼向量以匹配參考圖動作
-   * 5.3 調整角色位移：設定角色在空間中的整體移動
-   * 5.4 編輯道具朝向：設定武器的指向向量
-   * 5.5 編輯道具偏移 (Offset)：微調武器與關節間的精確距離（如拔刀瞬間）
-   * 5.6 導出數據：透過 HUD 介面導出當前姿勢與道具數值
-   * 5.7 寫入庫存：將數據存入 `poselib.js` 並在 `Choreography.js` 中串接指令
-
----
-
-## 4. HUD 控制與界面 (HUD Controls)
-
-專為高效率編輯設計的抬頭顯示器：
-
-* **控制清單：** 位於畫面右下角，列出當前模式與快捷鍵
-* **收摺功能：** 按下 `TAB` 鍵快速切換 HUD 顯示/隱藏
-* **多模式切換：** 按下 `V` 鍵在以下模式間切換：
-
-  * Joint
-  * Pos
-  * Ref
-  * Prop
+   - Reference Image Positioning  
+   - Joint Vector Editing  
+   - Actor Translation  
+   - Prop Direction Adjustment  
+   - Prop Offset Editing  
+   - HUD Data Export  
+   - Store into `poselib.js`  
+   - Connect in `Choreography.js`
 
 ---
 
-## 5. 未來開發計畫 (Future Plans)
+## 4. HUD Controls
 
-### 🛠️ UI 與功能增強
-
-* **多角色系統：**
-  支援場上存在多個 Actor，使用 `M` 鍵循環切換編輯對象
-
-* **內建建模工具：**
-
-  * 直接在 HUD 中建立/繪製道具模型與舞台佈景
-  * 無需重啟程式即可透過選單加載參考圖與切換顯示
-
-* **自動化流程：**
-
-  * 一鍵自動將當前幀寫入 `Choreography.js`
-  * 自動將新姿勢命名並存入 `poselib.js`
-
-### 📁 姿勢庫模組化
-
-* **分類管理：**
-
-  * `FullBody.js`：基礎站姿、坐姿等
-  * `Locomotion.js`：行走、奔跑、轉身
-  * `Combat.js`：攻擊、防禦、踢擊
-  * `Partial.js`：握手、持物、局部調整
-
-* **視覺化系統：**
-  引入標籤與元數據管理，建立「視覺化姿勢圖鑑」
-
-### 🎬 影視特效升級
-
-* **攝影機控制 (Camera)：**
-  支援指令驅動的攝影機震動、追蹤與運鏡
-
-* **視覺特效 (VFX)：**
-  加入基於向量的劍氣、殘影與打擊粒子效果
+- HUD Control Panel → Bottom Right  
+- Press `TAB` → Toggle HUD  
+- Press `V` → Switch Mode:
+  - Joint Mode
+  - Position Mode
+  - Reference Mode
+  - Prop Mode
 
 ---
 
-## 6. 安裝與執行 (Install and Run)
+## 5. Future Plans
 
-### 1️⃣ 複製專案
+### UI & Feature Enhancement
+
+- Multi Actor Support (`M` to Switch)
+- Built-in Prop / Stage Modeling
+- Runtime Reference Image Loader
+- One-click Frame Export
+- Auto Pose Naming & Storage
+
+---
+
+### Pose Library Modularization
+
+| Module | Content |
+|--------|--------|
+| FullBody.js | Idle / Sitting |
+| Locomotion.js | Walk / Run |
+| Combat.js | Attack / Defense |
+| Partial.js | Hand Grip |
+
+---
+
+### Cinematic Upgrade
+
+- Script-driven Camera Motion
+- Camera Shake
+- Vector Slash VFX
+- Afterimage System
+- Hit Particles
+
+---
+
+## 6. Install and Run
+
+### Clone Project
 
 ```bash
 git clone https://github.com/yourusername/vector-anim-3d.git
 ```
 
-### 2️⃣ 執行環境
+### Run
 
-* 本專案無需編譯，可直接使用瀏覽器開啟 `index.html`
-* 建議使用 VS Code 的 **Live Server** 套件以獲得最佳開發體驗
+- Open `index.html` directly in browser  
+- Recommended: VS Code + Live Server
 
-### 3️⃣ 開始編輯
+### Start Editing
 
-* 進入畫面後按下 `K` 開啟總編輯開關
-* 按下 `TAB` 察看完整快捷鍵清單
+- Press `K` → Enable Editor  
+- Press `TAB` → View Shortcut List
