@@ -4,7 +4,9 @@
 // myActor.addCommand("");
 function Choreography(myActor){
 	myActor.config.position = createVector(0, -77, 0); // reset position
-	myActor.config.rotation += radians(0); // reset rotation
+	myActor.config.rotation = radians(0); // reset rotation
+	myActor.lerpSpeed = 0.12;
+	myActor.addCommand("STAND",createVector(0, 0, 0),myActor.lerpSpeed); 
 	// tests:
 	// myActor.addCommand("OVER_THE_SHOULDER_REST");         // 先變回站姿
 	// myActor.addCommand("EDIT_SLOT",myActor); // 讓 Actor 進入可編輯的狀態
@@ -12,15 +14,27 @@ function Choreography(myActor){
 	// myActor.addCommand("HOLD_WEAPON_L"); // 再把左手舉起來
 	// myActor.addCommand("Orthodox_stand",createVector(0, 5, 0)); 
 	// combined_STEP_TURN_Orthodox_stand_HOLD_WEAPON_L(myActor);
-	// step_turn(myActor,4);
-
-	// finished:
-	AERIAL_VLEAVE(myActor);//in progress:only Sheathing action remain
-	// running(myActor);//finished
-	// jogging(myActor); //finished
+	// waiting("STAND",1,1);
 	
 	// in progress:
-	// myActor.addCommand("SPRINT_SET",createVector(0, 77-71.1, 100));
+	// step_turn(myActor,90,1);  // will over turn due to the actor rotation change
+	// myActor.addCommand("SPRINT_SET",createVector(0, 77-71.1, 100)); //searching for reference img
+	// SIDEHOP:
+	// let hop_distance = 100;
+	// let jump_height = sqrt(hop_distance) * 2; // 使用平方根讓高度隨距離增長，但不會過高
+	// myActor.addCommand("HOP_PRELOAD",createVector(0, 2, 2));
+	// myActor.addCommand("HOP_SIDEWAY",createVector(-hop_distance*0.7, -jump_height, 0));
+	// myActor.addCommand("HOP_PRELOAD",createVector(-hop_distance*0.3, 2+jump_height, 0));
+	// myActor.addCommand("STAND",createVector(0, -4, 0)); 
+	
+	// finished animation:
+	QUICK_DRAW_STRICK(myActor);//拔刀斬
+	HOP_BACKWARD(myActor,56);
+	// STRIGHT_SHEATHING(myActor);//收刀（上撩後收刀）
+	AERIAL_VLEAVE(myActor);//力劈華山
+	// CASUAL_SHEATHING(myActor); 收刀（平常收刀）
+	// running(myActor);//finished
+	// jogging(myActor); //finished
 }
 
 /**
@@ -42,7 +56,6 @@ function combinePoses(...poses) {
     }, {});
 }
 
-
 // intensity : 0.1~0.5
 function waiting(pose,intensity,duration){//only works with "stand" pose
 	for(let i=0;i<duration;i++){
@@ -52,10 +65,184 @@ function waiting(pose,intensity,duration){//only works with "stand" pose
 	myActor.addCommand(pose,null,myActor.lerpSpeed);
 }
 
+function HOP_BACKWARD(myActor,hop_distance){
+	let jump_height = sqrt(hop_distance) * 2; // 使用平方根讓高度隨距離增長，但不會過高
+	myActor.addCommand("HOP_PRELOAD",createVector(0, 2, 2));
+	myActor.addCommand("HOP_BACKWARD",createVector(0, -jump_height, -17-hop_distance*0.7));
+	myActor.addCommand("BACKHOP_LANDING_BUFFER",createVector(0, jump_height, -hop_distance*0.3)); 
+	myActor.addCommand("STAND",createVector(0, -2, -10)); 
+}
+
+function CASUAL_SHEATHING(myActor){
+	// myActor.addCommand("PROP_CMD",config = {
+	// 	prop : blade,
+	// 	offset: createVector(20.58, -9.71, 6.99),
+	// 	socketDir: createVector(0.84, -0.45, 0.31)
+	// });
+	
+	// myActor.addCommand("PROP_CMD",config = {
+	// 	prop : blade,
+	// 	offset: createVector(5.00, -1.15, 24.81),
+	// 	socketDir: createVector(0.16, -0.08, 0.98)
+	// });
+	
+	// myActor.addCommand("PROP_CMD",config = {
+	// 	prop : blade,
+	// 	offset: createVector(20.60, 14.43, -10.17),
+	// 	socketDir: createVector(0.80, 0.47, -0.37)
+	// });
+	
+	// myActor.addCommand("PROP_CMD",config = {
+	// 	prop : blade,
+	// 	offset: createVector(19.44, -5.83, -15.61),
+	// 	socketDir: createVector(0.70, -0.29, -0.65)
+	// });
+	
+	myActor.addCommand("PROP_CMD",config = {
+		prop : blade,
+		offset: createVector(12.04, -8.15, -15.57),
+		socketDir: createVector(0.53, -0.41, -0.74),
+		lerpSpeed : 0.12
+		
+	});
+	myActor.addCommand("CASUAL_SHEATHING_1");
+	
+	myActor.addCommand("PROP_CMD",config = {
+		prop : sheath,
+		offset: createVector(5.96, 8.86, -8.28),
+		socketDir: createVector(0.63, 0.45, -0.63)
+	});
+	myActor.addCommand("PROP_CMD",config = {
+		prop : blade,
+		parentJoint: "handR",
+		offset: createVector(14.82, -11.55, -10.69),
+		socketDir: createVector(0.64, -0.63, -0.44),
+		lerpSpeed : 0.12
+	});
+	myActor.addCommand("CASUAL_SHEATHING_2");
+	
+	myActor.addCommand("PROP_CMD",config = {
+		prop : blade,
+		offset: createVector(14.93, -2.65, -17.71),
+		socketDir: createVector(0.64, -0.18, -0.74),
+		lerpSpeed : 0.12
+	});
+	myActor.addCommand("PROP_CMD",config = {
+		prop : sheath,
+		offset: createVector(2.02, 2.00, -13.00),
+		socketDir: createVector(0.34, 0.10, -0.76)
+	});
+	myActor.addCommand("CASUAL_SHEATHING_3");
+	
+	myActor.addCommand("PROP_CMD",config = {
+		prop : blade,
+		parentJoint: "handL",
+		offset: createVector(-2.00, -3.98, -10.38),
+		socketDir: createVector(0.09, -0.38, -0.92),
+		lerpSpeed : 0.12
+	});
+	myActor.addCommand("PROP_CMD",config = {
+		prop : sheath,
+		offset: createVector(-2.00, -3.98, -10.38),
+		socketDir: createVector(0.09, -0.38, -0.92)
+	});
+	myActor.addCommand("CASUAL_SHEATHING_4");
+	myActor.addCommand("CASUAL_SHEATHING_STAND_transition");
+	myActor.addCommand("STAND");
+}
+
+function STRIGHT_SHEATHING(myActor){
+	myActor.addCommand("PROP_CMD",config = {
+		prop : sheath,
+		offset: createVector(7.32, 8.48, 14.62),
+		socketDir: createVector(0.25, 0.42, 0.87)
+	});
+	myActor.addCommand("PROP_CMD",config = {
+		prop : blade,
+		parentJoint : "handR",
+		offset: createVector(15.04, -9.38, -11.20),
+		socketDir: createVector(0.69, -0.52, -0.50)
+	});
+	myActor.addCommand("STRIGHT_SHEATHING",createVector(-5,-22,-10));
+
+	myActor.addCommand("PROP_CMD",config = {
+		prop : blade,
+		parentActor : myActor, 
+		parentJoint : "handR",
+		offset: createVector(16.24, 15.52, 0.00),
+		socketDir: createVector(0.77, 0.63, 0.09),
+		lerpSpeed : 0.12
+	});
+	myActor.addCommand("PROP_CMD",config = {
+		prop : sheath,
+		parentActor : myActor, 
+		parentJoint : "handL",
+		offset: createVector(3.08, -2.52, -13.04),
+		socketDir: createVector(0.20, -0.41, -0.89),
+	});
+	myActor.addCommand("QUICK_DRAW_STRICK_1",createVector(-5,10,-10));
+	myActor.addCommand("PROP_CMD",config = {
+		prop : blade,
+		parentActor : myActor, 
+		parentJoint : "handL",
+		offset: createVector(3.08, -2.52, -13.04),
+		socketDir: createVector(0.20, -0.41, -0.89),
+		lerpSpeed : 1
+	});
+	myActor.addCommand("STAND",createVector(-5, -29, 0)); 
+}
+
+function QUICK_DRAW_STRICK(myActor){
+	myActor.addCommand("PROP_CMD",config = {
+		prop : blade,
+		parentActor : myActor, 
+		parentJoint : "handL",
+		offset: createVector(3.08, -2.52, -13.04),
+		socketDir: createVector(0.20, -0.41, -0.89)
+	});
+	myActor.addCommand("PROP_CMD",config = {
+		prop : sheath,
+		parentActor : myActor, 
+		parentJoint : "handL",
+		offset: createVector(3.08, -2.52, -13.04),
+		socketDir: createVector(0.20, -0.41, -0.89)
+	});
+	myActor.addCommand("QUICK_DRAW_STRICK_1",createVector(20,29,0));
+
+	myActor.addCommand("PROP_CMD",config = {
+		prop : sheath,
+		offset: createVector(12.74, 2.10, -5.84),
+		socketDir: createVector(0.92, -0.04, -0.40)
+	});
+	myActor.addCommand("PROP_CMD",config = {
+		prop : blade,
+		parentJoint : "handR",
+		offset: createVector(17.36, -10.78, -11.32),
+		socketDir: createVector(0.77, -0.45, -0.45)
+	});
+	myActor.addCommand("QUICK_DRAW_STRICK_2",createVector(5,0,5),myActor.lerpSpeed*6);
+	
+	myActor.addCommand("PROP_CMD",config = {
+		prop : blade,
+		parentJoint : "handR",
+		offset: createVector(4.12, 22.94, -8.80),
+		socketDir: createVector(0.18, 0.93, -0.31)
+	});
+	myActor.addCommand("PROP_CMD",config = {
+		prop : sheath,
+		offset: createVector(7.32, 8.48, 14.62),
+		socketDir: createVector(0.25, 0.42, 0.87)
+	});
+	myActor.addCommand("QUICK_DRAW_STRICK_3",createVector(-10,11,25+60));
+	
+	
+	myActor.addCommand("QUICK_DRAW_STRICK_4",createVector(0,1,10));
+	myActor.addCommand("QUICK_DRAW_STRICK_4",createVector(0,0,0),myActor.lerpSpeed);
+	STRIGHT_SHEATHING(myActor); 
+}
+
 function AERIAL_VLEAVE(myActor){
 	myActor.addCommand("STAND",createVector(0, 0, 0),myActor.lerpSpeed); 
-	myActor.addCommand("HOLD_WEAPON_L"); // 再把左手舉起來
-	waiting("STAND",1,1);
 	
 	myActor.addCommand("PROP_CMD",config = {
 		prop : blade,
@@ -146,6 +333,7 @@ function AERIAL_VLEAVE(myActor){
 		socketDir: createVector(0.14, 0.00, -0.26)
 	});
 	myActor.addCommand("STAND",createVector(0, -52, 0),myActor.lerpSpeed); 
+	CASUAL_SHEATHING(myActor)
 }
 
 function running(myActor){
@@ -188,11 +376,11 @@ function combined_STEP_TURN_Orthodox_stand_HOLD_WEAPON_L (myActor){
 	myActor.addCommand("Combine_Poses", finalPose);
 }
 
-function step_turn(myActor,tempSpeed){
+function step_turn(myActor,degree,tempSpeed){
 	// currently only turn left
 	myActor.addCommand("STAND",null,myActor.lerpSpeed *tempSpeed); 
-	myActor.addCommand("STEP_TURN",60,myActor.lerpSpeed *tempSpeed);
-	myActor.addCommand("STEP_TURN",90,myActor.lerpSpeed *tempSpeed);
-	myActor.addCommand("STEP_TURN",120,myActor.lerpSpeed *tempSpeed);
-	myActor.addCommand("STAND",90,myActor.lerpSpeed *tempSpeed);
+	myActor.addCommand("STEP_TURN",degree);
+	myActor.addCommand("GLOBAL_TURN",[myActor.config.rotation,degree]);  
+	myActor.addCommand("STAND",null,myActor.lerpSpeed);
+	// myActor.addCommand("GLOBAL_TURN",[myActor.config.rotation,degree/2]); 
 }

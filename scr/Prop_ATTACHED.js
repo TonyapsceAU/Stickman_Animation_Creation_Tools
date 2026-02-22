@@ -1,35 +1,55 @@
 class Prop_ATTACHED {
-    constructor(config) {
-        this.type = config.type;
-        this.parentActor = config.parentActor;
-        this.parentJoint = config.jointName;
-        
-        // 編輯器調整出的數值
-        this.offset = config.offset || createVector(0, 0, 0);
-        this.socketDir = config.socketDir || createVector(0, 0, 0);//change from rotation to direction
-        
-        // 內部運算用的世界座標
-        this.pos = createVector(0, 0, 0);
-        this.dir = createVector(0, 1, 0); 
-    }
+	constructor(config) {
+		this.type = config.type;
+		this.parentActor = config.parentActor;
+		this.parentJoint = config.jointName;
+		
+		// 編輯器調整出的數值
+		this.offset = config.offset || createVector(0, 0, 0);
+		this.socketDir = config.socketDir || createVector(0, 0, 0);//change from rotation to direction
+		// 插值目標值 (初始化時與當前值相同)
+		this.targetOffset = this.offset.copy();
+		this.targetSocketDir = this.socketDir.copy();
+		this.lerpSpeed = 1; // 與 Actor 保持一致或自定義
+		this.isEditing = false; // 新增：標記是否處於手動編輯狀態
+		
+		// 內部運算用的世界座標
+		this.pos = createVector(0, 0, 0);
+		this.dir = createVector(0, 1, 0); 
+	}
 
 	update() {
 		if (!this.parentActor) return;
+		
+		// 如果不在手動編輯模式，才執行插值
+		if (!this.isEditing) {
+			this.offset = p5.Vector.lerp(this.offset, this.targetOffset, this.lerpSpeed);
+			this.socketDir = p5.Vector.lerp(this.socketDir, this.targetSocketDir, this.lerpSpeed);
+		} else {
+			// 在編輯模式下，強制讓 target 等於當前值
+			// 這樣當你結束編輯時，它不會彈回舊位置
+			this.targetOffset = this.offset.copy();
+			this.targetSocketDir = this.socketDir.copy();
+		}
+		
 		let joint = this.parentActor.joints[this.parentJoint];
 		if (joint) {
-			// 道具位置 = Actor 世界位置 + 關節相對位置
 			this.pos = p5.Vector.add(this.parentActor.config.position, joint);
-			// 道具方向 = 該關節目前的向量 (vPose)
 			this.dir = this.parentActor.vPose[this.parentJoint].copy();
 		}
 	}
 
 	applyCommand(config) {
 		if (!config) return;
-		// 僅處理掛載點與數值更新，不處理複雜插值
+		
+		// 掛載點通常是瞬間切換 (Parent switching)
+		if (config.parentActor) this.parentActor = config.parentActor;
 		if (config.parentJoint) this.parentJoint = config.parentJoint;
-		if (config.offset) this.offset = config.offset.copy();
-		if (config.socketDir) this.socketDir = config.socketDir.copy();//change from rotation to direction
+		
+		// 數值更新改為更新「目標」，而非直接覆蓋當前值
+		if (config.offset) this.targetOffset = config.offset.copy();
+		if (config.socketDir) this.targetSocketDir = config.socketDir.copy();
+		if (config.lerpSpeed) this.lerpSpeed = config.lerpSpeed;
 	}
 
 	display() {

@@ -5,8 +5,8 @@ function drawHUD(myActor) {
 		// 進入 2D HUD 視角
 		camera(0, 0, (height / 2.0) / tan(PI * 30.0 / 180.0), 0, 0, 0, 0, 1, 0);
 		
-		let padding = 15;
-		let boxW = 280; 
+		let padding = 25;
+		let boxW = 310; 
 		let boxH = 365; // 稍微增加左側高度以容納 Velocity 資訊
 		
 		// 將座標移至左上角
@@ -33,14 +33,14 @@ function drawHUD(myActor) {
 		// 3. 渲染右側參考圖面板 (獨立背景)
 		let rightX = width - padding * 2 - boxW;
 		let rightY = 15; // 從右上方開始
-		rightY = hud_ReferenceImage(rightX, rightY, boxW, lineH);
+		rightY = hud_ReferenceImage(rightX+30, rightY, boxW-30, lineH);
 		
 		// 4. 姿勢目錄 (自動接在參考圖下方)
 		// prioble: too long, will overlap with "control schema"
 		// rightY = hud_PoseDirectory(rightX, rightY, 18); 
 		
 		// 5. 快捷鍵說明清單 (固定於右下)
-		hud_KeyInstructions(rightX, height - padding * 2, boxW);
+		hud_KeyInstructions(rightX, height - padding * 2-15, boxW);
 
 		
 	
@@ -185,7 +185,6 @@ function hud_KeyInstructions(rightX, bottomY, boxW) {
 		// --- 顯示開關 ---
 		{ k: "H",     d: "Toggle Axes Display" },
 		{ k: "J",     d: "Toggle Actor Display" },
-		// { k: "L",     d: "Toggle Ref Image" },merged with others, now cycle though different mode(refimg,prop,joint,actor_pos)
 		
 		// --- 編輯控制 ---
 		{ k: "K",     d: "MASTER EDIT TOGGLE" },
@@ -195,17 +194,18 @@ function hud_KeyInstructions(rightX, bottomY, boxW) {
 		{ k: "F / G", d: "Step Size Dec / Inc" },
 		{ k: "W/A/S/D", d: "X / Z Axis Tweak" },
 		{ k: "Q / E", d: "Y Axis (Height) Tweak" },
-		// { k: "T", d: "X Axis Rotation" },//no need, since change to use direction for porp
 		{ k: "R", d: "Y Axis Rotation" },
-		// { k: "Y", d: "Z Axis Rotation" },//no need, since change to use direction for porp
 		
 		// --- 輸出與序列 ---
 		{ k: "ENTER", d: "Export Full Pose" },
 		{ k: "P",     d: "Export Partial Pose" },
-		{ k: "SPACE", d: "Play/Pause/Replay Animation" }
+		{ k: "SPACE", d: "Play/Pause/Replay Animation" },
+		{ k: "TAB",	  d: "Toggle This Menu" }, // 提示使用者如何切換
+		{ k: "↑ / ↓", d: "play speed control" }
 	];
 
-	let boxH = (keys.length * lineH) + 45;
+	// let boxH = (keys.length * lineH) + 45;
+	let boxH = showControlSchema ? (keys.length * lineH) + 45 : 35;
 	let yPos = bottomY - boxH;
 	
 	drawGlassBox(rightX, yPos, boxW, boxH);
@@ -214,11 +214,14 @@ function hud_KeyInstructions(rightX, bottomY, boxW) {
 	let y = yPos + padding;
 	
 	// 渲染標題
-	fill(180);
+	fill(showControlSchema ? 180 : "#FFD700"); // 收起時標題變色提醒
 	textSize(14);
-	text("▼ CONTROL SCHEMA", x, y);
-	y += lineH + 5;
+	// 根據狀態顯示箭頭
+	text(`${showControlSchema ? "▼" : "▲"} CONTROL SCHEMA (TAB)`, x, y);
+	
+	if (!showControlSchema) return; // 如果收起，直接結束函數
 
+	y += lineH;			
 	// 渲染按鍵表
 	textSize(11);
 	for (let i = 0; i < keys.length; i++) {
@@ -278,11 +281,11 @@ function hud_PropDetail(currentProp, x, y, lineH) {
 	text(`${isActive ? "●" : "○"} PROP: ${currentProp.type}`, x, y);
 	
 	let off = currentProp.offset;
-	fill(isActive ? (editPropDir ? color(230) : color(100, 255, 100)) : color(100));//if editing offset turn green
+	fill(isActive ? (editPropDir ? color(100, 255, 100) : color(230)) : color(100));//if editing offset turn green
 	text(`OFFSET < ${off.x.toFixed(2)}, ${off.y.toFixed(2)}, ${off.z.toFixed(2)} >`, x + 15, y + lineH);
 	
 	let dir = currentProp.socketDir;
-	fill(isActive ? (editPropDir ? color(100, 255, 100) : color(230)) : color(100));//if editing direction turn green
+	fill(isActive ? (editPropDir ? color(230) : color(100, 255, 100)) : color(100));//if editing direction turn green
 	text(`DIRECTION < ${dir.x.toFixed(2)}, ${dir.y.toFixed(2)}, ${dir.z.toFixed(2)} >`, x + 15, y + lineH * 2);
 	
 	return y + lineH * 2.5;

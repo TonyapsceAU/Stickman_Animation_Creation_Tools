@@ -108,10 +108,14 @@ class Actor {
 				if (part === "PROP_CMD") {
 					// 轉發給目前與此道具
 					let prop = this.currentTask.PROP_CMD.prop;
-					if(this.currentTask.PROP_CMD.parentActor){prop.parentActor = this.currentTask.PROP_CMD.parentActor;}
-					if(this.currentTask.PROP_CMD.parentJoint){prop.parentJoint = this.currentTask.PROP_CMD.parentJoint;}
-					if(this.currentTask.PROP_CMD.offset){prop.offset = this.currentTask.PROP_CMD.offset;}
-					if(this.currentTask.PROP_CMD.socketDir){prop.socketDir = this.currentTask.PROP_CMD.socketDir;}
+					let prop_config = {
+						parentActor : this.currentTask.PROP_CMD.parentActor,
+						parentJoint : this.currentTask.PROP_CMD.parentJoint,
+						offset : this.currentTask.PROP_CMD.offset,
+						socketDir : this.currentTask.PROP_CMD.socketDir,
+						lerpSpeed : this.currentTask.PROP_CMD.lerpSpeed
+					};
+					prop.applyCommand(prop_config);
 					continue;
 				}
 

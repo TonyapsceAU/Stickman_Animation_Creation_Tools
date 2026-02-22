@@ -24,6 +24,8 @@ let tweakStep = 0.02;
 // actorPositionedit removed
 let editPropDir = false;//T:editing direction ; F:editing offset
 let canExport = true;//make sure wont fill console with same message
+let showControlSchema = false; 
+let playspeed = 1;
 
 
 /**

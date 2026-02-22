@@ -28,11 +28,15 @@ function usersetup(){
 	append(Props,sheath);
 	
 	//for displaying privious pose : 
-	// myActor2 = new Actor(createActorConfig(),[255,0,0,200]);
-	// myActor2.addCommand("RUNNING_SET");
-	// myActor2.addCommand("RUNNING_POSE_1");
-	// myActor3 = new Actor(createActorConfig(),[255,0,0,150]);
-	// myActor3.addCommand("RUNNING_SET");
+	myActor2 = new Actor(createActorConfig(),[0,255,0,150]);//green
+	// myActor2.addCommand("QUICK_DRAW_STRICK_1",createVector(20,29,0));
+	// myActor2.addCommand("QUICK_DRAW_STRICK_2",createVector(5,0,5));
+	
+	myActor3 = new Actor(createActorConfig(),[0,0,255,150]);//blue
+	// myActor3.addCommand("QUICK_DRAW_STRICK_1",createVector(20,29,0));
+	// myActor3.addCommand("QUICK_DRAW_STRICK_2",createVector(5,0,5));
+	// myActor3.addCommand("QUICK_DRAW_STRICK_3",createVector(-10,11,25+60));
+	// myActor3.addCommand("QUICK_DRAW_STRICK_4",createVector(0,0,10));
 	
 	
 	Choreography(myActor);
@@ -59,22 +63,24 @@ function draw() {
 	// Floor Grid for perspective
 	drawGround();
 	
-	
+	if(playspeed!=1){
+		myActor.lerpSpeed *= playspeed;
+		playspeed = 1;
+	}
 	if(showActor) {
 		if(!Pause){//change: can pause during animation
 			myActor.update();
 			for(let i=0;i<Props.length;i++){
 				Props[i].update();
 			}
+			myActor2.update();
+			myActor3.update();
 		}
 		myActor.display(true);
 		for(let i=0;i<Props.length;i++){
 			Props[i].display();
 		}
-		
-		// myActor2.update();
 		// myActor2.display(false);
-		// myActor3.update();
 		// myActor3.display(false);
 	}
 

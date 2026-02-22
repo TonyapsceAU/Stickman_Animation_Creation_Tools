@@ -31,11 +31,23 @@ function keyPressed() {
 		}
 	
 	}
+	if (keyCode === TAB) {
+		showControlSchema = !showControlSchema;
+		return false; // 防止瀏覽器跳轉焦點
+	}
 
-    // 播放/暫停/重播
-    if (keyCode === 32) {
+	// 播放/暫停/重播
+	if (keyCode === 32) {
 		Play = true;
 	}
+	if(keyCode === 38){
+		playspeed *= 10;
+		
+	}else if(keyCode === 40){
+		playspeed /= 10;
+		
+	}
+	
 }
 
 function handleManualVectorTweak(myActor) {
@@ -72,6 +84,7 @@ function handleManualVectorTweak(myActor) {
 		case EDIT_MODES.PROP:
 			// 假設 blade 是你當前實例化的 Prop 物件
 			let currentProp = Props[currentPropIndex];
+			currentProp.isEditing = true;// --- 鎖定此道具的 Lerp ---
 			if (currentProp) {
 				if(key=="n"){
 					editPropDir = !editPropDir;
@@ -123,7 +136,7 @@ function exportCurrentPose() {
 	let output = `"NEW_POSE": (val) => ({\n`;
 	// 輸出當前的位置作為參考，或者是轉化為 movement 增量建議值
 	output += `    // Actor World Position: ${myActor.config.position.x.toFixed(2)}, ${myActor.config.position.y.toFixed(2)}, ${myActor.config.position.z.toFixed(2)}\n`;
-	output += `    movement: (val instanceof p5.Vector) ? val : createVector(0, 0, 0),\n`;
+	output += `    ...(val !== null && { movement: val }),\n`;
 	
 	jointNames.forEach(name => {
 		let vec = myActor.vPose[name];
@@ -148,7 +161,7 @@ function exportPartialPose() {
 	let output = "\"PARTIAL_POSE\": (val) => ({\n";
 	let count = 0;
 	output += `    Position: createVector(${myActor.config.position.x.toFixed(2)}, ${myActor.config.position.y.toFixed(2)}, ${myActor.config.position.z.toFixed(2)}),\n`;
-	output += `    movement: val,\n`
+	output += `    ...(val !== null && { movement: val }),\n`
 	if(editedJoints){
 		editedJoints.forEach(name => {
 			let vec = myActor.vPose[name];
@@ -179,7 +192,7 @@ function PropExportData(prop) {
 	output += `    prop_config: {\n`;
 	output += `        Type: "${prop.type}",\n`;
 	output += `        Parent: "${prop.parentActor}",\n`;
-	output += `        jointName: "${prop.parentJoint}",\n`;
+	output += `        parentJoint: "${prop.parentJoint}",\n`;
 	output += `        offset: createVector(${prop.offset.x.toFixed(2)}, ${prop.offset.y.toFixed(2)}, ${prop.offset.z.toFixed(2)}),\n`;
 	output += `        socketDir: createVector(${prop.socketDir.x.toFixed(2)}, ${prop.socketDir.y.toFixed(2)}, ${prop.socketDir.z.toFixed(2)})\n`;
 	output += `    },\n`;
