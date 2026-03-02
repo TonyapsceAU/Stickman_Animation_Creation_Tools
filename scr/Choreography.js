@@ -17,6 +17,7 @@ function Choreography(myActor){
 	// waiting("STAND",1,1);
 	
 	// in progress:
+	// myActor.addCommand("HOLD_RIFLE");
 	// step_turn(myActor,90,1);  // will over turn due to the actor rotation change
 	// myActor.addCommand("SPRINT_SET",createVector(0, 77-71.1, 100)); //searching for reference img
 	// SIDEHOP:
@@ -29,7 +30,7 @@ function Choreography(myActor){
 	
 	// finished animation:
 	QUICK_DRAW_STRICK(myActor);//拔刀斬
-	HOP_BACKWARD(myActor,56);
+	HOP_BACKWARD(myActor,56); 
 	// STRIGHT_SHEATHING(myActor);//收刀（上撩後收刀）
 	AERIAL_VLEAVE(myActor);//力劈華山
 	// CASUAL_SHEATHING(myActor); 收刀（平常收刀）
@@ -75,31 +76,31 @@ function HOP_BACKWARD(myActor,hop_distance){
 
 function CASUAL_SHEATHING(myActor){
 	// myActor.addCommand("PROP_CMD",config = {
-	// 	prop : blade,
+	// 	prop : "PlatinumTangSword",
 	// 	offset: createVector(20.58, -9.71, 6.99),
 	// 	socketDir: createVector(0.84, -0.45, 0.31)
 	// });
 	
 	// myActor.addCommand("PROP_CMD",config = {
-	// 	prop : blade,
+	// 	prop : "PlatinumTangSword",
 	// 	offset: createVector(5.00, -1.15, 24.81),
 	// 	socketDir: createVector(0.16, -0.08, 0.98)
 	// });
 	
 	// myActor.addCommand("PROP_CMD",config = {
-	// 	prop : blade,
+	// 	prop : "PlatinumTangSword",
 	// 	offset: createVector(20.60, 14.43, -10.17),
 	// 	socketDir: createVector(0.80, 0.47, -0.37)
 	// });
 	
 	// myActor.addCommand("PROP_CMD",config = {
-	// 	prop : blade,
+	// 	prop : "PlatinumTangSword",
 	// 	offset: createVector(19.44, -5.83, -15.61),
 	// 	socketDir: createVector(0.70, -0.29, -0.65)
 	// });
 	
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		offset: createVector(12.04, -8.15, -15.57),
 		socketDir: createVector(0.53, -0.41, -0.74),
 		lerpSpeed : 0.12
@@ -108,12 +109,12 @@ function CASUAL_SHEATHING(myActor){
 	myActor.addCommand("CASUAL_SHEATHING_1");
 	
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		offset: createVector(5.96, 8.86, -8.28),
 		socketDir: createVector(0.63, 0.45, -0.63)
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		parentJoint: "handR",
 		offset: createVector(14.82, -11.55, -10.69),
 		socketDir: createVector(0.64, -0.63, -0.44),
@@ -122,27 +123,27 @@ function CASUAL_SHEATHING(myActor){
 	myActor.addCommand("CASUAL_SHEATHING_2");
 	
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		offset: createVector(14.93, -2.65, -17.71),
 		socketDir: createVector(0.64, -0.18, -0.74),
 		lerpSpeed : 0.12
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		offset: createVector(2.02, 2.00, -13.00),
 		socketDir: createVector(0.34, 0.10, -0.76)
 	});
 	myActor.addCommand("CASUAL_SHEATHING_3");
 	
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		parentJoint: "handL",
 		offset: createVector(-2.00, -3.98, -10.38),
 		socketDir: createVector(0.09, -0.38, -0.92),
 		lerpSpeed : 0.12
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		offset: createVector(-2.00, -3.98, -10.38),
 		socketDir: createVector(0.09, -0.38, -0.92)
 	});
@@ -153,12 +154,12 @@ function CASUAL_SHEATHING(myActor){
 
 function STRIGHT_SHEATHING(myActor){
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		offset: createVector(7.32, 8.48, 14.62),
 		socketDir: createVector(0.25, 0.42, 0.87)
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		parentJoint : "handR",
 		offset: createVector(15.04, -9.38, -11.20),
 		socketDir: createVector(0.69, -0.52, -0.50)
@@ -166,7 +167,7 @@ function STRIGHT_SHEATHING(myActor){
 	myActor.addCommand("STRIGHT_SHEATHING",createVector(-5,-22,-10));
 
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		parentActor : myActor, 
 		parentJoint : "handR",
 		offset: createVector(16.24, 15.52, 0.00),
@@ -174,7 +175,7 @@ function STRIGHT_SHEATHING(myActor){
 		lerpSpeed : 0.12
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		parentActor : myActor, 
 		parentJoint : "handL",
 		offset: createVector(3.08, -2.52, -13.04),
@@ -182,7 +183,7 @@ function STRIGHT_SHEATHING(myActor){
 	});
 	myActor.addCommand("QUICK_DRAW_STRICK_1",createVector(-5,10,-10));
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		parentActor : myActor, 
 		parentJoint : "handL",
 		offset: createVector(3.08, -2.52, -13.04),
@@ -194,14 +195,14 @@ function STRIGHT_SHEATHING(myActor){
 
 function QUICK_DRAW_STRICK(myActor){
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		parentActor : myActor, 
 		parentJoint : "handL",
 		offset: createVector(3.08, -2.52, -13.04),
 		socketDir: createVector(0.20, -0.41, -0.89)
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		parentActor : myActor, 
 		parentJoint : "handL",
 		offset: createVector(3.08, -2.52, -13.04),
@@ -210,12 +211,12 @@ function QUICK_DRAW_STRICK(myActor){
 	myActor.addCommand("QUICK_DRAW_STRICK_1",createVector(20,29,0));
 
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		offset: createVector(12.74, 2.10, -5.84),
 		socketDir: createVector(0.92, -0.04, -0.40)
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		parentJoint : "handR",
 		offset: createVector(17.36, -10.78, -11.32),
 		socketDir: createVector(0.77, -0.45, -0.45)
@@ -223,13 +224,13 @@ function QUICK_DRAW_STRICK(myActor){
 	myActor.addCommand("QUICK_DRAW_STRICK_2",createVector(5,0,5),myActor.lerpSpeed*6);
 	
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		parentJoint : "handR",
 		offset: createVector(4.12, 22.94, -8.80),
 		socketDir: createVector(0.18, 0.93, -0.31)
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		offset: createVector(7.32, 8.48, 14.62),
 		socketDir: createVector(0.25, 0.42, 0.87)
 	});
@@ -245,14 +246,14 @@ function AERIAL_VLEAVE(myActor){
 	myActor.addCommand("STAND",createVector(0, 0, 0),myActor.lerpSpeed); 
 	
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		parentActor : myActor, 
 		parentJoint : "handL",
 		offset: createVector(-3.02, -1.28, -12.86),
 		socketDir: createVector(0.00, 0.00, -0.3)
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		parentActor : myActor, 
 		parentJoint : "handL",
 		offset: createVector(-3.02, -1.28, -12.86),
@@ -261,49 +262,49 @@ function AERIAL_VLEAVE(myActor){
 	myActor.addCommand("SQUAT_JUMP_SQUAT",createVector(0, 12, 0));
 	
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		offset: createVector(8.16, -0.80, 10.90),
 		socketDir: createVector(0.60, -0.34, 0.90)
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		offset: createVector(8.16, -0.80, 10.90),
 		socketDir: createVector(0.60, -0.34, 0.90)
 	});
 	myActor.addCommand("SQUAT_JUMP_JUMP",createVector(0, -200, 0));
 	 
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		offset: createVector(-0.83, 1.36, -15.35),
 		socketDir: createVector(0.00, 0.00, -0.28)
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		offset: createVector(-0.83, 1.36, -15.35),
 		socketDir: createVector(0.00, 0.00, -0.28)
 	});
 	myActor.addCommand("AERIAL_CLEAVE_1",createVector(0,-10,0),myActor.lerpSpeed*2.5);
 	
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		offset: createVector(-0.83, 1.36, -15.35),
 		socketDir: createVector(0.00, 0.00, -0.28)
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		offset: createVector(-0.83, 1.36, -15.35),
 		socketDir: createVector(0.00, 0.00, -0.28)
 	});
 	myActor.addCommand("AERIAL_CLEAVE_2",createVector(0,-10,0));
 	
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		parentJoint:"handR",
 		offset: createVector(-1.92, 20.74, -4.64),
 		socketDir: createVector(-0.02, 0.36, -0.08)
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		parentJoint:"handL",
 		offset: createVector(8.44, -12.12, 13.24),
 		socketDir: createVector(0.28, -0.60, 0.44)
@@ -311,24 +312,24 @@ function AERIAL_VLEAVE(myActor){
 	myActor.addCommand("AERIAL_CLEAVE_3",createVector(0,10,0),myActor.lerpSpeed*1.5);
 	
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		offset: createVector(0.00, 24.44, -2.06),
 		socketDir: createVector(0, 1.44, 0)
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		offset: createVector(7.60, 10.54, 11.62),
 		socketDir: createVector(0.26, 0.40, 0.64)
 	});
 	myActor.addCommand("AERIAL_CLEAVE_4",createVector(0,250,0));
 
 	myActor.addCommand("PROP_CMD",config = {
-		prop : blade,
+		prop : "PlatinumTangSword",
 		offset: createVector(0.64, 23.48, 8.18),
 		socketDir: createVector(0.00, 1.60, 0.62)
 	});
 	myActor.addCommand("PROP_CMD",config = {
-		prop : sheath,
+		prop : "PlatinumTangSwordSheath",
 		offset: createVector(5.40, 2.04, -14.44),
 		socketDir: createVector(0.14, 0.00, -0.26)
 	});

@@ -3,10 +3,10 @@ function drawHUD(myActor) {
 	
 	push();
 		// 進入 2D HUD 視角
-		camera(0, 0, (height / 2.0) / tan(PI * 30.0 / 180.0), 0, 0, 0, 0, 1, 0);
+		camera(0, 0, (height*0.65) / tan(PI * 30.0 / 180.0), 0, 0, 0, 0, 1, 0);
 		
-		let padding = 25;
-		let boxW = 310; 
+		let padding = 5;
+		let boxW = 300; 
 		let boxH = 365; // 稍微增加左側高度以容納 Velocity 資訊
 		
 		// 將座標移至左上角
@@ -32,7 +32,7 @@ function drawHUD(myActor) {
 		
 		// 3. 渲染右側參考圖面板 (獨立背景)
 		let rightX = width - padding * 2 - boxW;
-		let rightY = 15; // 從右上方開始
+		let rightY = 0; // 從右上方開始
 		rightY = hud_ReferenceImage(rightX+30, rightY, boxW-30, lineH);
 		
 		// 4. 姿勢目錄 (自動接在參考圖下方)
@@ -40,10 +40,8 @@ function drawHUD(myActor) {
 		// rightY = hud_PoseDirectory(rightX, rightY, 18); 
 		
 		// 5. 快捷鍵說明清單 (固定於右下)
-		hud_KeyInstructions(rightX, height - padding * 2-15, boxW);
-
+		hud_KeyInstructions(rightX, height - padding*2, boxW);
 		
-	
 	pop();
 }
 
@@ -230,7 +228,7 @@ function hud_KeyInstructions(rightX, bottomY, boxW) {
 		// 針對不同功能的按鍵給予微小的顏色區分
 		if (i < 4) fill(100, 200, 255);        // 視角鍵：淡藍色
 		else if (i < 6) fill(150, 255, 150);  // 顯示鍵：淡綠色
-		else if (i < 13) fill(255, 204, 0);   // 編輯鍵：金黃色
+		else if (i < 14) fill(255, 204, 0);   // 編輯鍵：金黃色
 		else fill(255, 100, 100);             // 系統鍵：淡紅色
 		
 		text(item.k, x, y);

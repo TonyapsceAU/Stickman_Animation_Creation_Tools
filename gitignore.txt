@@ -1,0 +1,33 @@
+# --- OS Specific Files ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Editor/IDE Folders ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Node/Dependencies ---
+node_modules/
+package-lock.json
+
+# --- Local Assets/Large Files ---
+# 排除高解析度原始圖檔，僅保留壓縮後的 WebGL 參考圖
+assets/images/raw/
+*.psd
+*.ai
+
+# --- 專案特有：自動產生的導出文件 (Project Specific) ---
+# 防止你在編輯器按下 ENTER 導出的姿勢 JSON 被上傳
+# 如果你希望保留某些特定的劇本，可以改用 !instances/choreography.json 來排除
+instances/props/*/config.json.bak
+export_*.json
+*.pose.json
+
+# --- Temp/Log Files ---
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

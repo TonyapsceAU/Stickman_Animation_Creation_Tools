@@ -1,31 +1,14 @@
 // globle config
+let loader;
 let jointNames = [];
 let myActor;
 let Play = false, Pause = false;
 let myFont;
 let Props = [];//chabnge from using currentProp to lsit of prop
 
-function usersetup(){
-	myActor = new Actor(createActorConfig(),[255,0,0,255]);
-	let prop_config = {
-		type: "sword",
-		parentActor : myActor, 
-		jointName : "handL",
-		offset: createVector(-2.64, 2.32, -14.62),
-		socketDir: createVector(0.00, 0.00, -0.64)//change to use direction instead of drgree
-	};
-	blade = new Prop_ATTACHED(prop_config);
-	append(Props,blade);
-	
-	prop_config = {
-		type: "sheath",
-		parentActor : myActor, 
-		jointName : "handL",
-		offset: createVector(-2.64, 2.32, -14.62),
-		socketDir: createVector(0.00, 0.00, -0.64)
-	};
-	sheath = new Prop_ATTACHED(prop_config);
-	append(Props,sheath);
+
+function preload() {
+	myActor = new Actor(createActorConfig(),[192, 139, 115, 255]);
 	
 	//for displaying privious pose : 
 	myActor2 = new Actor(createActorConfig(),[0,255,0,150]);//green
@@ -37,19 +20,19 @@ function usersetup(){
 	// myActor3.addCommand("QUICK_DRAW_STRICK_2",createVector(5,0,5));
 	// myActor3.addCommand("QUICK_DRAW_STRICK_3",createVector(-10,11,25+60));
 	// myActor3.addCommand("QUICK_DRAW_STRICK_4",createVector(0,0,10));
-	
-	
+
 	Choreography(myActor);
-}
+
+    loader = new PropLoader();
+    loader.init();
 
 
-function preload() {
-	myFont = loadFont('https://cdnjs.cloudflare.com/ajax/libs/topcoat/0.8.0/font/SourceCodePro-Bold.otf');
+	myFont = loadFont('assets/SourceCodePro-Bold.otf');
 }
 
 function setup() {
 	createCanvas(windowWidth, windowHeight, WEBGL);
-	usersetup();
+
 	// 直接呼叫 Actor 的方法取得清單
 	jointNames = myActor.getJointNames();
 	// frameRate(10)
@@ -62,6 +45,13 @@ function draw() {
 	orbitControl();
 	// Floor Grid for perspective
 	drawGround();
+	if (loader.isReady) {
+		Props = loader.activeProps;//may cause prop's values i.e offset and dire to get reset again and again
+		Props.forEach(p => {
+			p.parentActor = myActor;
+		});
+		loader.isReady = false;
+	}
 	
 	if(playspeed!=1){
 		myActor.lerpSpeed *= playspeed;
@@ -70,13 +60,17 @@ function draw() {
 	if(showActor) {
 		if(!Pause){//change: can pause during animation
 			myActor.update();
+			// 更新所有道具
 			for(let i=0;i<Props.length;i++){
 				Props[i].update();
 			}
 			myActor2.update();
 			myActor3.update();
 		}
+
+		
 		myActor.display(true);
+		// 顯示所有道具
 		for(let i=0;i<Props.length;i++){
 			Props[i].display();
 		}
@@ -137,7 +131,7 @@ function drawGround() {//warning(not urgin):Cannot draw stroke on plane objects 
 	    // 2. 繪製主地面與網格
 	    fill(255, 100); 
 	    stroke(80);           
-	    plane(2000, 2000); // 增加細分參數產生網格感
+	    plane(500, 500); // 增加細分參數產生網格感
 	    
 	    // 3. 繪製中心點參考 (Origin Marker)
 	    push();
@@ -176,4 +170,7 @@ function createActorConfig() {
 		legUpperR: 22, legLowerR: 22,
 		feetL: 2, feetR: 2
 	};
+}
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
 }

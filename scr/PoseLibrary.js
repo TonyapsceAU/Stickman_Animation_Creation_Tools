@@ -8,6 +8,26 @@ const PoseLibrary = {
 	"PROP_CMD" : (prop_config) => ({
 		PROP_CMD:prop_config
 	}),
+
+	"AIM_RIFLE": (val) => ({
+		...(val !== null && { movement: val }),
+		shoulderL : createVector(0.89, 0.07, 0.45),
+		elbowL : createVector(0.13, 0.35, 0.93),
+		handL : createVector(-0.41, -0.39, 0.82),
+		shoulderR : createVector(-0.90, 0.07, -0.43),
+		elbowR : createVector(-0.23, 0.94, 0.25),
+		handR : createVector(0.20, -0.74, 0.64),
+	}),
+
+	"HOLD_RIFLE": (val) => ({
+		Position: createVector(0.00, -77.00, 0.00),
+		...(val !== null && { movement: val }),
+		elbowR    : createVector(-0.77, 0.62, -0.12),
+		handR     : createVector(0.71, 0.51, 0.48),
+		elbowL    : createVector(0.52, 0.82, -0.22),
+		handL     : createVector(-0.21, 0.72, 0.66),
+		shoulderL : createVector(0.99, 0.07, 0.08),
+	}),
 	
 	"BACKHOP_LANDING_BUFFER": (val) => ({
 		movement: val,
@@ -92,7 +112,6 @@ const PoseLibrary = {
 	}),
 
 	"QUICK_DRAW_STRICK_2": (val) => ({
-		Position: createVector(18.80, -51.62, 0.00),
 		...(val !== null && { movement: val }),
 		pelvis : createVector(-0.11, 0.89, -0.44),
 		chest : createVector(-0.38, 0.75, -0.55),

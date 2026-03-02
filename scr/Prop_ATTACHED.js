@@ -1,6 +1,8 @@
 class Prop_ATTACHED {
 	constructor(config) {
 		this.type = config.type;
+		this.initPropModel(config.type);
+		
 		this.parentActor = config.parentActor;
 		this.parentJoint = config.jointName;
 		
@@ -10,12 +12,27 @@ class Prop_ATTACHED {
 		// 插值目標值 (初始化時與當前值相同)
 		this.targetOffset = this.offset.copy();
 		this.targetSocketDir = this.socketDir.copy();
-		this.lerpSpeed = 1; // 與 Actor 保持一致或自定義
+		this.lerpSpeed = 0.12; // 與 Actor 保持一致或自定義
 		this.isEditing = false; // 新增：標記是否處於手動編輯狀態
 		
 		// 內部運算用的世界座標
 		this.pos = createVector(0, 0, 0);
 		this.dir = createVector(0, 1, 0); 
+	}
+
+	// 在 Prop_ATTACHED 類中
+	initPropModel(type) {
+		// 💡 關鍵：直接從 window 全域物件中尋找與 type 同名的類別
+		// 假設 type 是 "M1897"，這行等同於 new M1897()
+		const ModelClass = window[type];
+
+		if (typeof ModelClass === 'function') {
+			this.model = new ModelClass();
+			this.model_val = []; // 預設為空陣列
+			console.log(`Prop Model [${type}] 透過全域自動實例化成功。`);
+		} else {
+			console.error(`找不到道具模型類別: [${type}]。請檢查 model.js 內的 Class 名稱是否正確，或腳本是否載入失敗。`);
+		}
 	}
 
 	update() {
@@ -50,6 +67,7 @@ class Prop_ATTACHED {
 		if (config.offset) this.targetOffset = config.offset.copy();
 		if (config.socketDir) this.targetSocketDir = config.socketDir.copy();
 		if (config.lerpSpeed) this.lerpSpeed = config.lerpSpeed;
+		if (config.model_val) this.model_val = config.model_val;
 	}
 
 	display() {
@@ -71,8 +89,7 @@ class Prop_ATTACHED {
 				rotateY(atan2(v.x, v.z));
 				rotateX(acos(v.y / rho));
 			}
-			
-			this.drawShape();
+			this.model.display(this.model_val);
 		pop();
 	}
 
@@ -84,48 +101,4 @@ class Prop_ATTACHED {
             rotateX(acos(v.y / rho));
         }
     }
-
-    drawShape() {
-        fill(currentEditMode === EDIT_MODES.PROP ? "#FF00FF" : 200);
-        stroke(255);
-        if (this.type === "sword") {
-            this.drawSword(); // 劍身
-        } else if(this.type === "sheath") {
-            this.drawSheath(); //劍鞘
-        } else {
-            this.drawBall(); // 預設方塊
-        }
-    }
-	
-	drawSword() {
-		noStroke();
-		// 畫一把簡單的劍
-		fill("#dddbcd");
-		box(1, 60, 2); // 劍身
-		
-		translate(0, -20, 0);
-		box(1, 2, 4);  // 護手
-
-		fill("#362d2c");
-		translate(0, -5, 0);
-		box(1.1, 7, 2.1);  // 手柄
-
-		fill("#dec699");
-		translate(0, 7, 0);
-		box(1.1, 1.5, 2,1);  // habaki
-	}
-
-	drawSheath() {
-		noStroke();
-		fill("#dddbcd");
-		translate(0, 6, 0);
-		box(1.5, 50, 2.5); // 劍鞘
-	}
-	
-	drawBall() {
-		// 球類通常不需要跟隨旋轉，直接畫即可
-		fill(currentEditMode === EDIT_MODES.PROP ? "#FF3232" : 200);
-		noStroke();
-		sphere(10);
-	}
 }

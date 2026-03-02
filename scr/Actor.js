@@ -8,8 +8,10 @@ class Actor {
 		this.currentTask = null;
 		this.lerpSpeed = 0.12;
 		this.onPoseComplete = null;
-		
+
+		this.coat = new Coat(3,23); 
 		this.addCommand("STAND");
+		// this.wristRotation = [0,0];
 	}
 
 	addCommand(poseName,val=null,speed=null) {
@@ -107,7 +109,7 @@ class Actor {
 				// --- C. 道具指令 ---
 				if (part === "PROP_CMD") {
 					// 轉發給目前與此道具
-					let prop = this.currentTask.PROP_CMD.prop;
+					let prop = Props.find(p => p.type === this.currentTask.PROP_CMD.prop);
 					let prop_config = {
 						parentActor : this.currentTask.PROP_CMD.parentActor,
 						parentJoint : this.currentTask.PROP_CMD.parentJoint,
@@ -141,6 +143,11 @@ class Actor {
 		}
 		
 		this.joints = this.solveSkeleton(this.vPose);
+		
+		
+
+    // 更新大衣物理
+    // this.coat.update(wJ, this.config.rotation);
 	}
 	
 	display(SeeBond) {
@@ -160,7 +167,20 @@ class Actor {
 				['pelvis', 'kneeR'], ['kneeR', 'footR'], ['footR', 'toeR']
 			];
 			
-			
+			fill(40); // 大衣主色 (深灰色)
+        noStroke();
+        beginShape();
+            // 左肩 -> 右肩 -> 右腰 -> 左腰
+            let sL = this.joints.shoulderL;
+            let sR = this.joints.shoulderR;
+            let pL = p5.Vector.add(this.joints.pelvis, createVector(-this.config.shoulderW*0.8, 0, 0));
+            let pR = p5.Vector.add(this.joints.pelvis, createVector(this.config.shoulderW*0.8, 0, 0));
+            vertex(sL.x, sL.y, sL.z);
+            vertex(sR.x, sR.y, sR.z);
+            vertex(pR.x, pR.y, pR.z);
+            vertex(pL.x, pL.y, pL.z);
+        endShape(CLOSE);
+		
 			// 繪製骨骼 (這裡的座標現在是相對於角色中心的)
 			if(!SeeBond){
 				stroke(this.colors);
@@ -190,6 +210,9 @@ class Actor {
 				sphere(this.config.head / 2);
 			pop();
 		pop();
+
+		
+		// this.coat.display(this.getWorldJoints(), this.config.rotation);
 	}
 
 	// 在 Actor 類別內
@@ -203,4 +226,25 @@ class Actor {
 			'kneeR', 'footR', 'toeR'
 		];
 	}
+	getWorldJoints() {
+	    let worldJoints = {};
+	    let pos = this.config.position;
+	    let rot = this.config.rotation;
+	
+	    for (let name in this.joints) {
+	        // 1. 複製局部座標向量
+	        let v = this.joints[name].copy();
+	
+	        // 2. 執行世界旋轉 (繞 Y 軸)
+	        // 注意：如果你的 p5.js 版本 rotate 沒生效，請確保傳入的是 (角度, 軸向)
+	        v.rotate(rot, createVector(0, 1, 0));
+	
+	        // 3. 執行世界位移 (加上 Actor 的當前位置)
+	        v.add(pos);
+	
+	        worldJoints[name] = v;
+	    }
+	    return worldJoints;
+	}
+
 }

@@ -1,0 +1,7 @@
+{
+    "type": "PlatinumTangSwordSheath",
+    "parentActor" : "myActor", 
+    "jointName" : "handL",
+    "offset": {"x":-2.64,"y":2.32,"z":-14.62},
+    "socketDir": {"x": 0.00, "y":0.00, "z":-0.64}
+}

@@ -40,11 +40,35 @@
 * **插值邏輯：**
   採用基於向量的線性插值（Lerp），支援動態調整插值速度（Lerp Speed）。
 
+2.1 數據驅動架構 (Data-Driven Architecture)
+
+為了提升擴充性，引擎已從硬編碼邏輯遷移至動態載入系統。
+
+非同步加載器 (PropLoader)： 透過 PropLoader.js 實現自動化資產掃描。引擎啟動時會讀取註冊表，並動態注入 model.js 腳本，實現道具的「熱插拔」。
+
+實例與預製件分離 (Prefab vs Instance)： * prefabProps/：存放道具的原始物理參數與 3D 繪製邏輯。
+
+instances/props/：存放特定劇本中的道具實體配置（如特定顏色、縮放或初始掛載點）。
+
+2.2 道具掛載協議 (Prop Attachment Protocol)
+
+道具系統現在支援高級的向量指向邏輯：
+
+Socket System： 道具不再只是簡單的子物件，而是透過 socketDir 向量計算與骨骼關節的相對朝向。
+
+動態插值： 道具的 offset（偏移）與 rotation（旋轉）均支援獨立的 lerpSpeed，容許實現如「武器在手中滑動」或「收刀入鞘」的細膩過渡。
 ---
 
 ### 檔案結構 (Project Structure)
 
 ```text
+├── instances/               # 🎬 運行時數據與實例配置
+│   ├── props/               # 當前場景使用的道具實例
+│   │   ├── [PropName]/      # 實例化的道具 (含 config.json & model.js)
+│   │   └── prop_registry.json # 道具加載清單 (Registry)
+│   └── choreography.json    # 劇本序列配置 (JSON 化預備)
+├── prefabProps/             # 📦 原始道具零件庫 (Templates)
+│   └── [PropName]/          # 原始模型定義與預設參數
 ├── assets/                  # 靜態資源
 │   ├── SourceCodePro-Bold.otf # UI 字體
 │   └── image/               # 動作參考圖 (例如 jogging 序列)
@@ -52,6 +76,7 @@
 ├── mySketch.js              # 主程式邏輯 (Setup/Draw)
 └── scr/                     # 核心原始碼
     ├── Actor.js             # 角色類別：處理向量插值與骨架求解
+    ├── PropLoader.js        # 新增：異步資產調度器
     ├── Choreography.js      # 劇本管理：定義動作指令序列
     ├── HUD.js               # 界面渲染：即時資訊與數值顯示
     ├── PoseLibrary.js       # 姿勢庫：儲存所有 V-Pose 數據
@@ -74,7 +99,10 @@
    透過程式碼定義 3D 場景空間。
 
 2. **道具配置 (Prop)**
-   使用 `Prop_ATTACHED` 類別建立如刀劍、刀鞘等動態道具。
+   不再使用硬編碼，改採「模板-實例」雙層架構：
+   * 2.1 定義預製件 (Prefab)： 在 prefabProps/ 建立模型邏輯 (model.js) 與物理預設 (config.json)。這定義了道具的「本體」。
+   * 2.2 部署實例 (Instance)： 將預製件複製到 instances/props/。在此處修改 config.json 可針對特定劇本定義「實例屬性」（例如：這把槍是由哪個 Actor 持有、初始掛載在哪個關節、是否有特殊的顏色縮放）。
+   * 2.3 註冊與加載： 在 prop_registry.json 中登記實例 ID，PropLoader 會在啟動時自動完成腳本注入與全域類別綁定。
 
 3. **角色設定 (Actor)**
    初始化 Actor 實例並設定初始向量姿勢（vPose）。
@@ -125,6 +153,8 @@
 
   * 一鍵自動將當前幀寫入 `Choreography.js`
   * 自動將新姿勢命名並存入 `poselib.js`
+  [x] 動態類別註冊：實現 window[className] 自動尋找並實例化道具模型，無需手動修改註冊表代碼。
+  * JSON 劇本編輯器：開發一個圖形化界面，直接將編輯好的 PROP_CMD 數值寫入 instances/props/config.json。
 
 ### 📁 姿勢庫模組化
 
