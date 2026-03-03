@@ -4,7 +4,7 @@
     "jointName" : "handL",
     "offset": {"x":0,"y":0,"z":0},
     "socketDir": {"x": 0, "y":0, "z":0},
+    "scale": 1,
     "visuals": {
-        "scale": 1
     }
 }

@@ -1,8 +1,20 @@
 class PlatinumTangSwordSheath {
-    constructor() {
+    constructor(scale) {
+		this.scale = scale;
     }
 
 	display() {
+		push();
+            // 在模型最頂層應用縮放
+            scale(this.scale);
+            
+            // 繪製邏輯...
+            this.drawModel();
+        pop();
+		
+	}
+
+	drawModel() {
 		noStroke();
 		fill("#e8e7dd");
 		translate(0, 6, 0);

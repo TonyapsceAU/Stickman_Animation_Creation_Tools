@@ -1,7 +1,7 @@
 class Prop_ATTACHED {
 	constructor(config) {
 		this.type = config.type;
-		this.initPropModel(config.type);
+		this.initPropModel(config.type,config.scale,config.model_val);
 		
 		this.parentActor = config.parentActor;
 		this.parentJoint = config.jointName;
@@ -21,14 +21,14 @@ class Prop_ATTACHED {
 	}
 
 	// 在 Prop_ATTACHED 類中
-	initPropModel(type) {
+	initPropModel(type,scale,model_val) {
 		// 💡 關鍵：直接從 window 全域物件中尋找與 type 同名的類別
 		// 假設 type 是 "M1897"，這行等同於 new M1897()
 		const ModelClass = window[type];
 
 		if (typeof ModelClass === 'function') {
-			this.model = new ModelClass();
-			this.model_val = []; // 預設為空陣列
+			this.model = new ModelClass(scale);
+			this.model_val = model_val || []; // 預設為空陣列
 			console.log(`Prop Model [${type}] 透過全域自動實例化成功。`);
 		} else {
 			console.error(`找不到道具模型類別: [${type}]。請檢查 model.js 內的 Class 名稱是否正確，或腳本是否載入失敗。`);
@@ -68,6 +68,7 @@ class Prop_ATTACHED {
 		if (config.socketDir) this.targetSocketDir = config.socketDir.copy();
 		if (config.lerpSpeed) this.lerpSpeed = config.lerpSpeed;
 		if (config.model_val) this.model_val = config.model_val;
+		if (config.scale)  this.model.scale = config.scale;
 	}
 
 	display() {

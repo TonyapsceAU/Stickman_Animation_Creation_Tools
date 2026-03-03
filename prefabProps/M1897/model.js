@@ -1,16 +1,24 @@
 class M1897 {
-	constructor() {
-		this.length = 120; // 槍身基準長度
-		this.width = 20;   // 槍身基準寬度
-		this.color = 40;   // 深灰色金屬質感
-	}
+    constructor(scale) {
+		this.scale = scale;
+    }
 
+	display(vals) {
+		push();
+            // 在模型最頂層應用縮放
+            scale(this.scale);
+            
+            // 繪製邏輯...
+            this.drawModel(vals);
+        pop();
+		
+	}
 	/**
 	* 繪製槍枝實體
 	* @param {Number} slide - 上膛滑塊位置 (0.0 為閉鎖, 1.0 為完全拉後)
 	* @param {Number} recoil - 後座力強度 (0.0 為靜止, 1.0 為最大震動/槍火)
 	*/
-	display(val = [0, 0]) {
+	drawModel(val = [0, 0]) {
 		let slide = 0, recoil = 0;
 		rotateX(-PI/2);
 		push();

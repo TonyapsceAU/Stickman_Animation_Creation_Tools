@@ -44,7 +44,8 @@ class PropLoader {
             jointName: config.jointName,
             offset: createVector(config.offset.x, config.offset.y, config.offset.z),
             socketDir: createVector(config.socketDir.x, config.socketDir.y, config.socketDir.z),
-            model_val: config.model_val || []
+            model_val: config.visuals || [],
+            scale: config.scale || 1,
         });
 
         this.activeProps.push(propInstance);
