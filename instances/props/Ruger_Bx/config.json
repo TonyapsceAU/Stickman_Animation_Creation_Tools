@@ -1,0 +1,15 @@
+{
+    "type": "Ruger_Bx",
+    "parentActor" : "myActor", 
+    "jointName" : "handR",
+    "offset": {"x":2.76,"y":6.06,"z":1.88},
+    "socketDir": { "x": 0.27, "y": 0.95, "z": 0.15 },
+    "scale": 0.65,
+    "visuals": {
+        "len":10,
+        "radius":10,
+        "w":2.5,
+        "t":1.5,
+        "segments":10
+    }
+}

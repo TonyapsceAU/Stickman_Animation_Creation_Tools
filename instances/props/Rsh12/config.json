@@ -1,0 +1,11 @@
+{
+    "type": "Rsh12",
+    "parentActor" : "myActor", 
+    "jointName" : "handR",
+    "offset": {"x":0,"y":0,"z":0},
+    "socketDir": {"x": 0, "y":0, "z":0},
+    "scale": 0.5,
+    "visuals": {
+        "revolve" : 0
+    }
+}

@@ -17,7 +17,6 @@ function Choreography(myActor){
 	// waiting("STAND",1,1);
 	
 	// in progress:
-	// myActor.addCommand("HOLD_RIFLE");
 	// step_turn(myActor,90,1);  // will over turn due to the actor rotation change
 	// myActor.addCommand("SPRINT_SET",createVector(0, 77-71.1, 100)); //searching for reference img
 	// SIDEHOP:
@@ -29,10 +28,11 @@ function Choreography(myActor){
 	// myActor.addCommand("STAND",createVector(0, -4, 0)); 
 	
 	// finished animation:
-	QUICK_DRAW_STRICK(myActor);//拔刀斬
-	HOP_BACKWARD(myActor,56); 
+	myActor.addCommand("HOLD_RIFLE");
+	// QUICK_DRAW_STRICK(myActor);//拔刀斬
+	// HOP_BACKWARD(myActor,56); 
 	// STRIGHT_SHEATHING(myActor);//收刀（上撩後收刀）
-	AERIAL_VLEAVE(myActor);//力劈華山
+	// AERIAL_VLEAVE(myActor);//力劈華山
 	// CASUAL_SHEATHING(myActor); 收刀（平常收刀）
 	// running(myActor);//finished
 	// jogging(myActor); //finished

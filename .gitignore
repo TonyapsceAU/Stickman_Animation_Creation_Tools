@@ -14,8 +14,14 @@ node_modules/
 package-lock.json
 
 # --- Local Assets/Large Files ---
-# If you have high-res reference images you don't want to host on GitHub:
-# assets/images/raw/
+# 忽略 assets/image/ 資料夾下的所有內容
+assets/image/*
+
+# 如果你想保留資料夾但忽略圖片，可以使用以下方式：
+# assets/image/*.jpg
+# assets/image/*.png
+# assets/image/*.jpeg
+# assets/image/*.webp
 
 # --- Temp/Log Files ---
 *.log

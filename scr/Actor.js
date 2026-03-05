@@ -168,38 +168,81 @@ class Actor {
 			];
 			
 			fill(40); // 大衣主色 (深灰色)
-        noStroke();
-        beginShape();
-            // 左肩 -> 右肩 -> 右腰 -> 左腰
-            let sL = this.joints.shoulderL;
-            let sR = this.joints.shoulderR;
-            let pL = p5.Vector.add(this.joints.pelvis, createVector(-this.config.shoulderW*0.8, 0, 0));
-            let pR = p5.Vector.add(this.joints.pelvis, createVector(this.config.shoulderW*0.8, 0, 0));
-            vertex(sL.x, sL.y, sL.z);
-            vertex(sR.x, sR.y, sR.z);
-            vertex(pR.x, pR.y, pR.z);
-            vertex(pL.x, pL.y, pL.z);
-        endShape(CLOSE);
+			noStroke();
+			beginShape();
+				// 左肩 -> 右肩 -> 右腰 -> 左腰
+				let sL = this.joints.shoulderL;
+				let sR = this.joints.shoulderR;
+				let pL = p5.Vector.add(this.joints.pelvis, createVector(-this.config.shoulderW*0.8, 0, 0));
+				let pR = p5.Vector.add(this.joints.pelvis, createVector(this.config.shoulderW*0.8, 0, 0));
+				vertex(sL.x, sL.y, sL.z);
+				vertex(sR.x, sR.y, sR.z);
+				vertex(pR.x, pR.y, pR.z);
+				vertex(pL.x, pL.y, pL.z);
+			endShape(CLOSE);
+			
+
 		
 			// 繪製骨骼 (這裡的座標現在是相對於角色中心的)
-			if(!SeeBond){
-				stroke(this.colors);
-				strokeWeight(this.config.head / 2);
-				for (let [a, b] of bones) {
-					let pA = this.joints[a]; let pB = this.joints[b];
-					if(pA && pB) line(pA.x, pA.y, pA.z, pB.x, pB.y, pB.z);
-				}
+			if(SeeBond){
+				noStroke();
+				let c = color(this.colors);
+        		fill(red(c), green(c), blue(c), 100);//make color transparent
 			} else {
-				for (let [a, b] of bones) {
-					let pA = this.joints[a]; let pB = this.joints[b];
-					if(pA && pB) {
-						strokeWeight(this.config.head / 2); stroke(this.colors);
-						line(pA.x, pA.y, pA.z, pB.x, pB.y, pB.z);
-						strokeWeight(1); stroke(255);
-						line(pA.x, pA.y, pA.z, pB.x, pB.y, pB.z);
-					}
+				noStroke();
+				fill(this.colors);
+			}
+			
+			for (let [a, b] of bones) {
+				let pA = this.joints[a];
+				let pB = this.joints[b];
+				
+				if (pA && pB) {
+					let v_diff = p5.Vector.sub(pB, pA);
+					let dist = v_diff.mag();
+					let v_dir = v_diff.copy().normalize();
+
+					// 1. 在關節連接點 A 畫一顆球 (消除旋轉時的斷裂感)
+					push();
+						translate(pA.x, pA.y, pA.z);
+						sphere(this.config.head / 4); // 半徑為骨骼厚度的一半
+					pop();
+
+					// 2. 繪製圓柱體骨骼
+					push();
+						// 定位在中點
+						let pos = p5.Vector.lerp(pA, pB, 0.5);
+						translate(pos.x, pos.y, pos.z);
+						
+						// 計算轉向 (對齊 Y 軸)
+						let axis = createVector(0, 1, 0).cross(v_dir);
+						let angle = acos(createVector(0, 1, 0).dot(v_dir));
+						if (axis.mag() > 0) rotate(angle, axis);
+						
+						// 使用圓柱體，外觀會接近厚線條
+						if(SeeBond){
+							fill(255,255,255,255);
+							cylinder(1, dist);
+							if(SeeBond){
+								noStroke();
+								let c = color(this.colors);
+								fill(red(c), green(c), blue(c), 100);//make color transparent
+							} else {
+								noStroke();
+								fill(this.colors);
+							}
+						}
+						cylinder(this.config.head / 4, dist);
+						
+					pop();
+
+					push();
+						translate(pB.x, pB.y, pB.z);
+						sphere(this.config.head / 4); // 半徑為骨骼厚度的一半
+					pop(); 
 				}
 			}
+			
 			
 			
 			// Draw Head

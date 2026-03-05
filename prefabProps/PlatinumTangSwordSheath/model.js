@@ -16,7 +16,10 @@ class PlatinumTangSwordSheath {
 
 	drawModel() {
 		noStroke();
-		fill("#e8e7dd");
+		specularMaterial(255);
+        shininess(50);
+
+		fill("#ebebe2");
 		translate(0, 6, 0);
 		box(1.3, 50, 2.3); // 劍鞘
 

@@ -16,6 +16,9 @@ class PlatinumTangSword {
 
 	drawModel() {
 		noStroke();
+		specularMaterial(255);
+        shininess(50);
+		
 		fill("#c3c5c4");
 		box(1, 60, 2); // 劍身
 		

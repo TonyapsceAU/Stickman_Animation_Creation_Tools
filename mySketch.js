@@ -39,10 +39,11 @@ function setup() {
 }
 
 
-
 function draw() {
 	background(30);
 	orbitControl();
+	loighting();
+
 	// Floor Grid for perspective
 	drawGround();
 	if (loader.isReady) {
@@ -69,7 +70,7 @@ function draw() {
 		}
 
 		
-		myActor.display(true);
+		myActor.display();
 		// 顯示所有道具
 		for(let i=0;i<Props.length;i++){
 			Props[i].display();
@@ -156,6 +157,15 @@ function drawGround() {//warning(not urgin):Cannot draw stroke on plane objects 
 	    pop();
     
     pop();
+}
+
+function loighting(){
+	// 基礎環境光：維持背光處的細節
+    ambientLight(60); 
+    
+    // 定向光：從側上方照射，產生高光與暗面，強化道具輪廓
+    let lightDir = createVector(1, 1, -1);
+    directionalLight(255, 255, 255, lightDir);
 }
 
 function createActorConfig() {

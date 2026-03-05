@@ -65,7 +65,12 @@ class M1897 {
 				cylinder(1.25,14);
 			pop();
 			box(2.5, 2.5, 12); 
-			
+
+			push();
+				translate(0, 3, -7);
+				ModelUtils.trigger(3,3,0.5);
+			pop();
+
 			translate(0, 0, 12/2);
 			push();
 				translate(0, -1, 40/2);
@@ -82,8 +87,8 @@ class M1897 {
 			
 			// // --- 3. 泵動滑塊邏輯 (Slide / Pump Action) ---
 			push();
-				let slideX = 18 - (slide * 10); // 計算滑塊在 10-18 像素間移動
-				translate(0, 1, 10/2+slideX);
+				let slideZ = 18 - (slide * 10); // 計算滑塊在 10-18 像素間移動
+				translate(0, 1, 10/2+slideZ);
 				rotateX(PI/2);
 				fill(60, 40, 30); // 木質或深色護木
 				cylinder(1.5,10);// 滑塊位置隨 slide 參數在槍管下放移動
@@ -92,25 +97,12 @@ class M1897 {
 			// --- 4. 槍口閃光 (Muzzle Flash) ---
 			// 僅在後座力極大時觸發（模擬開火瞬間）
 			if (recoil > 0.8) {
-				this.drawMuzzleFlash(95, -2, recoil);
+				ModelUtils.drawMuzzleFlash(95, -2, recoil);
 			}
 		
 		pop();
 	}
 
-	drawMuzzleFlash(x, y, intensity) {
-		push();
-			translate(x, y, 0);
-			noStroke();
-			fill(255, 200, 50, 200 * intensity); // 橙黃色透明度
-			sphere(8 * intensity); // 核心火球
-			
-			// 放射狀火光
-			for(let i = 0; i < 5; i++) {
-				rotateX(PI/3);
-				ellipse(0, 0, 20 * intensity, 5 * intensity);
-			}
-		pop();
-	}
+
 }
 window.M1897 = M1897;

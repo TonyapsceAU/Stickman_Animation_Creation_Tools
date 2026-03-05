@@ -14,6 +14,10 @@ function keyPressed() {
 			}else if(currentEditMode == "JOINT"){
 				currentJointIndex = (currentJointIndex + 1) % jointNames.length; // 切換關節
 			}
+			// else if(currentEditMode == "REF_IMAGE"){
+			// 	refindex = (refindex + 1) % reflist.length;
+				// loadimage();
+			// }
 			key = ' ';
 		}
 		
@@ -79,6 +83,8 @@ function handleManualVectorTweak(myActor) {
 		case EDIT_MODES.REF_IMAGE:
 			targetVec = refPos;
 			if (keyIsDown(82)) refRotY += tweakStep;
+			if (keyIsDown(90)) refresize -= tweakStep;//z strink
+			if (keyIsDown(88)) refresize += tweakStep;//x inlage
 			break;
 
 		case EDIT_MODES.PROP:

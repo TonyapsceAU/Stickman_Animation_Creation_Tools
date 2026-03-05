@@ -1,6 +1,7 @@
 class Prop_ATTACHED {
 	constructor(config) {
 		this.type = config.type;
+		this.model_val = null;
 		this.initPropModel(config.type,config.scale,config.model_val);
 		
 		this.parentActor = config.parentActor;
@@ -25,7 +26,6 @@ class Prop_ATTACHED {
 		// 💡 關鍵：直接從 window 全域物件中尋找與 type 同名的類別
 		// 假設 type 是 "M1897"，這行等同於 new M1897()
 		const ModelClass = window[type];
-
 		if (typeof ModelClass === 'function') {
 			this.model = new ModelClass(scale);
 			this.model_val = model_val || []; // 預設為空陣列

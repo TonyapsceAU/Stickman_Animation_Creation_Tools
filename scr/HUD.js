@@ -139,14 +139,15 @@ function hud_ReferenceImage(rightX, rightY, boxW, lineH) {
 
 	if (refPos) {
 		fill(255);
-		let infoY = ry + lineH * 2.5;
-		text(`X: ${refPos.x.toFixed(2)}`, rx + 15, infoY);
-		text(`Y: ${refPos.y.toFixed(2)}`, rx + 15, infoY + lineH);
-		text(`Z: ${refPos.z.toFixed(2)}`, rx + 15, infoY + lineH * 2);
+		text(`X: ${refPos.x.toFixed(2)}`, rx + 15, ry + lineH * 2);
+		text(`Y: ${refPos.y.toFixed(2)}`, rx + 15, ry + lineH * 3);
+		text(`Z: ${refPos.z.toFixed(2)}`, rx + 15, ry + lineH * 4);
 		fill(100, 200, 255);
-		text(`ROT-Y: ${degrees(refRotY).toFixed(0)}°`, rx + 15, infoY + lineH * 3.2);
+		text(`ROT-Y: ${degrees(refRotY).toFixed(0)}°`, rx + 15, ry + lineH * 5);
+		text(`Scale: ${refresize.toFixed(0)}°`, rx + 15, ry + lineH * 6);
+		
 	}
-	return rightY + boxH + 15; // 回傳下一個面板的起點
+	return rightY + boxH + lineH * 5; // 回傳下一個面板的起點
 }
 
 // --- 視覺輔助組件 ---

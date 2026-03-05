@@ -1,6 +1,5 @@
 {
   "activeProps": [
-    { "id": "PlatinumTangSword", "folder": "PlatinumTangSword" },
-    { "id": "PlatinumTangSwordSheath", "folder": "PlatinumTangSwordSheath" }
+    { "id": "revolver", "folder": "Rsh12" }
   ]
 }

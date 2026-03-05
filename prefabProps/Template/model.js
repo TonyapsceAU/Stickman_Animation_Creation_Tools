@@ -20,3 +20,4 @@ class Template {
 		box(10,10,10);
 	}
 }
+window.Template = Template;
