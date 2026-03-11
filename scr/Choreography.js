@@ -28,7 +28,9 @@ function Choreography(myActor){
 	// myActor.addCommand("STAND",createVector(0, -4, 0)); 
 	
 	// finished animation:
-	myActor.addCommand("HOLD_RIFLE");
+	// myActor.addCommand("HOLD_PISTOL");
+	myActor.addCommand("AIM_RIFLE");
+	// myActor.addCommand("HOLD_RIFLE");
 	// QUICK_DRAW_STRICK(myActor);//拔刀斬
 	// HOP_BACKWARD(myActor,56); 
 	// STRIGHT_SHEATHING(myActor);//收刀（上撩後收刀）

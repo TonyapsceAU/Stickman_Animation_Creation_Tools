@@ -69,6 +69,7 @@ class M1897 {
 			push();
 				translate(0, 3, -7);
 				ModelUtils.trigger(3,3,0.5);
+				ModelUtils.triggerGard(3,3,0.5);
 			pop();
 
 			translate(0, 0, 12/2);

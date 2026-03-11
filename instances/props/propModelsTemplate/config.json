@@ -1,0 +1,11 @@
+{
+    "type": "rifleChassis",
+    "parentActor" : "myActor", 
+    "jointName" : "handR",
+    "offset": {"x":1.90, "y":0.00, "z":-0.14},
+    "socketDir": {"x":0.28, "y":0.65, "z":0.70},
+    "scale": 0.75,
+    "visuals": {
+        "rotations":{"x":3.14,"y":0,"z":-0.25}
+    }
+}

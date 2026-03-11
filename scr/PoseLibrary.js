@@ -9,18 +9,25 @@ const PoseLibrary = {
 		PROP_CMD:prop_config
 	}),
 
+	"HOLD_PISTOL": (val) => ({
+		...(val !== null && { movement: val }),
+		elbowL    : createVector(0.23, 0.77, 0.60),
+		handL     : createVector(-0.39, -0.74, 0.55),
+		elbowR    : createVector(-0.23, 0.77, 0.60),
+		handR     : createVector(0.39, -0.74, 0.55)
+	}),
+        
 	"AIM_RIFLE": (val) => ({
 		...(val !== null && { movement: val }),
-		shoulderL : createVector(0.89, 0.07, 0.45),
-		elbowL : createVector(0.13, 0.35, 0.93),
-		handL : createVector(-0.41, -0.39, 0.82),
-		shoulderR : createVector(-0.90, 0.07, -0.43),
-		elbowR : createVector(-0.23, 0.94, 0.25),
-		handR : createVector(0.20, -0.74, 0.64),
+		elbowR    : createVector(-0.29, 0.69, 0.66),
+		shoulderL : createVector(0.44, 0.03, 0.90),
+		elbowL    : createVector(0.07, 0.20, 0.98),
+		shoulderR : createVector(-0.90, 0.07, -0.41),
+		handR     : createVector(0.18, -0.65, 0.74),
+		handL     : createVector(-0.36, 0.01, 0.93)
 	}),
 
 	"HOLD_RIFLE": (val) => ({
-		Position: createVector(0.00, -77.00, 0.00),
 		...(val !== null && { movement: val }),
 		elbowR    : createVector(-0.77, 0.62, -0.12),
 		handR     : createVector(0.71, 0.51, 0.48),

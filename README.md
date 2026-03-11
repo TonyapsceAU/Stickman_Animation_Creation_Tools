@@ -71,6 +71,47 @@
 專為 1:1 還原設計的輔助工具：
 * **空間變換**：支援參考圖在 3D 空間中的 `Translation` (位移)、`Rotation` (旋轉) 與 `Scale` (等比例縮放)。
 * **序列管理**：透過手動定義的 `reflist`，使用者可在編輯模式下按 `M` 鍵快速循環切換不同視角的參考圖。
+
+### 2.7 資產開發與實例化架構 (Asset Development & Instance Architecture)
+
+為了克服 JavaScript 無法動態掃描資料夾的限制，並最大化開發效率，引擎採用 **「模板驅動 (Template-Driven)」** 與 **「實例化資料夾 (Folder-based Instances)」** 的開發協議。
+
+#### 📂 預製件模板 (Prefab Templates)
+位於 `prefabProps/`，這是資產的「基因庫」。每個模板都是一個可供複製的開發起點：
+* **Instance Template (配置模板)**: 包含基礎的 `config.js`。用戶只需定義物理參數，無需處理加載邏輯。
+* **Model Template (模型邏輯模板)**: 針對具備固定結構的物件（如劍、槍）。
+    * **範例 (Sword Template)**: 一把劍固定由 Grip (握柄)、Guard (護手) 與 Blade (劍身) 組成。使用者複製模板後，只需在 `model.js` 中調整 `ModelUtils` 的參數或增減零件，即可快速衍生出不同型號的武器。
+
+#### 📂 實例化資料夾 (Folder-based Instances)
+位於 `instances/props/`，存放所有「已就緒」的遊戲資產：
+* **獨立實例**: 每個資料夾（如 `bullet_22lr/`）皆為封裝好的實體，包含該道具專屬的 `config.js` 與渲染邏輯 `model.js`。
+* **開發流**: 用戶從 `prefabProps/` 複製模板至此處並重新命名，隨即進入細節調教。
+
+#### 📄 中央註冊表 (Prop Registry)
+位於 `instances/props/prop_registry.json`，作為系統的通訊錄：
+* **動態加載**: 只有在註冊表中登記的 `PropID` 與 `Path` 會被 `PropLoader` 識別。
+* **解耦設計**: 透過註冊表管理，實現資產的「熱插拔」體驗，新增道具無需修改引擎核心代碼。
+
+
+
+#### 🛠️ 模組化建模範例 (Non-Abstract Model Logic)
+以 `Sword Template` 為例，開發者面對的是語義化的結構代碼，而非破碎的幾何頂點：
+
+```javascript
+// model.js - 使用者只需修改數值
+function drawModel(cfg) {
+    // 1. Grip (握柄)
+    fill(cfg.colorGrip);
+    ModelUtils.drawCylinderPart(5, 40, 0, 0, 0); 
+
+    // 2. Guard (護手) - 基於握柄自動對位
+    fill(cfg.colorGuard);
+    ModelUtils.drawBox(0, 0, 45, 60, 10, 15); 
+
+    // 3. Blade (劍身)
+    fill(cfg.colorBlade);
+    ModelUtils.drawBox(0, 0, 120, 20, 140, 5); 
+}
 ---
 
 ### 檔案結構 (Project Structure)
@@ -82,9 +123,9 @@
 │   │   │   ├── config.json  # 包含 scale, jointName, offset 等物理參數
 │   │   │   └── model.js     # 接收 scale 並應用於渲染頂層
 │   │   └── prop_registry.json # 道具加載清單 (Registry)
-│   └── choreography.json    # 劇本序列配置 (JSON 化預備)
 ├── prefabProps/             # 📦 原始道具零件庫 (Templates)
-│   └── [PropName]/          # 原始模型定義與預設參數
+│   ├── propinstancetemplate/ # 配置模板：供用戶複製至 instances/ 作為新的 config.json 起點
+│   └── propmodeltemplate/    # 模型模板：提供非抽象類物件 (如刀、槍) 的預設構造代碼
 ├── assets/                  # 靜態資源
 │   ├── SourceCodePro-Bold.otf # UI 字體
 │   └── image/               # 動作參考圖 (例如 jogging 序列)

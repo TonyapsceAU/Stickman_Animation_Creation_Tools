@@ -16,13 +16,13 @@ function loadimagesname(){
 function loadimage(){
 	if(!refImage){
 		// scorct = reflist[refindex];//read assets/image/ and get all the image path
-		scorct = "are-we-gonna-see-some-survival-rifles-like-these-22lr-on-v0-cbe5nmkrrsub1.jpg.webp";
+		scorct = "images.jpeg";
 		refImage = loadImage("assets/image/"+scorct); // load the first image
 		refPos = createVector(0, 0, 0);
 		refRotY = 0;
 	}
 }
-
+//Primary Arms SLx MD-20 Micro Red Dot Sight
 
 function ImageDsipaly(){
 	if (!refImage) return; // 安全檢查

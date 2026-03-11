@@ -144,7 +144,7 @@ function hud_ReferenceImage(rightX, rightY, boxW, lineH) {
 		text(`Z: ${refPos.z.toFixed(2)}`, rx + 15, ry + lineH * 4);
 		fill(100, 200, 255);
 		text(`ROT-Y: ${degrees(refRotY).toFixed(0)}°`, rx + 15, ry + lineH * 5);
-		text(`Scale: ${refresize.toFixed(0)}°`, rx + 15, ry + lineH * 6);
+		text(`Scale: ${refresize.toFixed(2)}°`, rx + 15, ry + lineH * 6);
 		
 	}
 	return rightY + boxH + lineH * 5; // 回傳下一個面板的起點

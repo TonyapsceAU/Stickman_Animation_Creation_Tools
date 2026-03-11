@@ -1,11 +1,11 @@
 {
-    "type": "Rsh12",
+    "type": "SFx300",
     "parentActor" : "myActor", 
     "jointName" : "handR",
-    "offset": {"x":0,"y":0,"z":0},
+    "offset": {"x":0,"y":5.8,"z":2.26},
     "socketDir": {"x": 0, "y":0, "z":0},
-    "scale": 0.5,
+    "scale":0.75,
     "visuals": {
-        "revolve" : 0
+        "lighup":0
     }
 }

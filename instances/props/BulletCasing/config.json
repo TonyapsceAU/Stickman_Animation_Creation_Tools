@@ -1,0 +1,14 @@
+{
+    "type": "BulletCasing",
+    "parentActor" : "myActor", 
+    "jointName" : "handR",
+    "offset": { "x": 0, "y": 0, "z": 10 },
+    "socketDir": { "x": 0, "y": 0, "z": 0 },
+    "scale": 1,
+    "visuals": {
+        "length": 25,
+        "radius": 3,
+        "shape": 1, 
+        "rim": 1
+    }
+}

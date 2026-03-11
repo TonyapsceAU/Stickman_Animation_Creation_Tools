@@ -1,0 +1,19 @@
+{
+    "type": "Bullet",
+    "parentActor" : "myActor", 
+    "jointName" : "handR",
+    "offset": { "x": 0, "y": 0, "z": 15 },
+    "socketDir": { "x": 0, "y": 0, "z": 0 },
+    "scale": 1,
+    "visuals": {
+        "length": 8, 
+        "radius": 2, 
+        "curve": 0.9, 
+        "colorMain": {"r": 80, "g": 82, "b": 85}, 
+        "colorSec": {"r": 60, "g": 62, "b": 65},
+        "tip": 0, 
+        "ogiveStyle": 2, 
+        "base": 0.5, 
+        "wadcutterStyle" : 0.5
+    }
+}

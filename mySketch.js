@@ -8,6 +8,7 @@ let Props = [];//chabnge from using currentProp to lsit of prop
 
 
 function preload() {
+	console.log("preload start");
 	myActor = new Actor(createActorConfig(),[192, 139, 115, 255]);
 	
 	//for displaying privious pose : 
@@ -37,6 +38,7 @@ function setup() {
 	jointNames = myActor.getJointNames();
 	// frameRate(10)
 }
+
 
 
 function draw() {

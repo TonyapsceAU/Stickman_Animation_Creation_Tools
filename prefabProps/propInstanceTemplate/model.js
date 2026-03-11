@@ -9,6 +9,9 @@ class Template {
             scale(this.scale);
             
             // 繪製邏輯...
+			noStroke();
+			specularMaterial(255);
+			shininess(50);
             this.drawModel();
         pop();
 		

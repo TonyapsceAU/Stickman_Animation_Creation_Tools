@@ -82,6 +82,7 @@ class Ruger1022 {
         push();
             translate(0,-0.5,7);
 			ModelUtils.trigger(3,3,0.5);
+			ModelUtils.triggerGard(3,3,0.5);
         pop();
 	}
 
